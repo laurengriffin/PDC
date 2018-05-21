@@ -34,6 +34,7 @@ namespace PDC_Lauren
         {
             if (!WriteCheckBox.Checked)
             {
+                Console.WriteLine("reading from PLC");
                 // access and format form data
                 var ipAddress = IPAddTextBox.Text.Trim();
                 Console.WriteLine("IP Address: {0}", ipAddress);
@@ -150,18 +151,22 @@ namespace PDC_Lauren
                         case 0:
                             Console.WriteLine("data type identified as int16");
                             Console.WriteLine($"data[{i}]={client.GetInt16Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{tagName}={client.GetInt16Value(tag, (i * tag.ElementSize))}\n");
                             break;
                         case 1:
                             Console.WriteLine("data type identified as int8");
                             Console.WriteLine($"data[{i}]={client.GetInt8Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{tagName}={client.GetInt8Value(tag, (i * tag.ElementSize))}\n");
                             break;
                         case 2:
                             Console.WriteLine("data type identified as int32");
                             Console.WriteLine($"data[{i}]={client.GetInt32Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{tagName}={client.GetInt32Value(tag, (i * tag.ElementSize))}\n");
                             break;
                         case 3:
                             Console.WriteLine("data type identified as float32");
                             Console.WriteLine($"data[{i}]={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{tagName}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
                             // the line below reads value as integer
                             // Console.WriteLine($"data[{i}]={client.ReadTag(tag, (i * tag.ElementSize))}\n");
                             break;
@@ -169,20 +174,23 @@ namespace PDC_Lauren
                             Console.WriteLine("data type identified as string");
                             // not tested bc unable to find a string data type value on plc
                             Console.WriteLine($"data[{i}]={client.ReadTag(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{tagName}={client.ReadTag(tag, (i * tag.ElementSize))}\n");
                             break;
                         default:
                             Console.WriteLine("no data type identified");
+                            MessageBox.Show("no data type identified");
                             break;
                     }
                 }
+
             }
             else if (WriteCheckBox.Checked)
             {
-                Console.WriteLine("write checkbox is checked");
+                Console.WriteLine("writing to PLC");
             }
             else
             {
-                Console.WriteLine("write checkbox value is unknown. unable to perform any operation.");
+                Console.WriteLine("'Write to PLC' checkbox value is unknown. unable to perform any operation.");
                 Console.WriteLine("checked? " + WriteCheckBox.Checked);
             }
             
