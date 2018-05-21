@@ -44,7 +44,6 @@ namespace PDC_Lauren
             var tag = new Tag("ip address", "path", CpuType.LGX, "nameOfTag", DataType.Float32, 1);
             if (string.IsNullOrEmpty(plcom.path))
             {
-
                 tag = new Tag(plcom.ipAddress, plcom.cput, plcom.tagname, plcom.dtInt, plcom.elemCount);
             }
             else
@@ -60,26 +59,21 @@ namespace PDC_Lauren
             {
                 Thread.Sleep(100);
             }
-
             if (client.GetStatus(tag) != Libplctag.PLCTAG_STATUS_OK)
             {
                 Console.WriteLine($"Error setting up tag internal state. Error {client.DecodeError(client.GetStatus(tag))}\n");
                 return;
             }
-
             if (!WriteCheckBox.Checked)
             {
                 Console.WriteLine("reading from PLC");
-
-                // get the data
+                // get the data from the form
                 var rc = client.ReadTag(tag, 5000);
-
                 if (rc != Libplctag.PLCTAG_STATUS_OK)
                 {
                     Console.WriteLine($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n");
                     return;
                 }
-
                 // print data according to data type
                 for (int i = 0; i < tag.ElementCount; i++)
                 {
@@ -105,6 +99,7 @@ namespace PDC_Lauren
                             Console.WriteLine($"data[{i}]={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
                             MessageBox.Show($"{plcom.tagname}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
                             break;
+                        // haven't tested the string data type
                         //case "String":
                         //    Console.WriteLine("data type identified as string");
                         //    // not tested bc unable to find a string data type value on plc
@@ -131,16 +126,15 @@ namespace PDC_Lauren
             
         }
 
+        // unused
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
 
         }
-
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
-
         private void tabPage2_Click(object sender, EventArgs e)
         {
 

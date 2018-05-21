@@ -102,8 +102,7 @@
             "Int16",
             "Int8",
             "Int32",
-            "Float32",
-            "String"});
+            "Float32"});
             this.DataTypeComboBox.Location = new System.Drawing.Point(266, 233);
             this.DataTypeComboBox.Name = "DataTypeComboBox";
             this.DataTypeComboBox.Size = new System.Drawing.Size(358, 21);
