@@ -32,43 +32,44 @@ namespace PDC_Lauren
 
         private void connectButton_Click(object sender, EventArgs e)
         {
+            // access and format form data
+            PLCommunication plcom = new PLCommunication(IPAddTextBox.Text.Trim(), (PathComboBox.SelectedIndex + 1).ToString().Trim(),
+                    SlotTextBox.Text.Trim(), CpuTypeComboBox.Text.Trim(), TagNameTextBox.Text.Trim(), DataTypeComboBox.Text,
+                    Int32.Parse(ElementCountTextBox.Text), WriteCheckBox.Checked, WriteValueTextBox.Text);
+
+            // create instance of plc client
+            var client = new Libplctag();
+
+            // create the tag
+            var tag = new Tag("ip address", "path", CpuType.LGX, "nameOfTag", DataType.Float32, 1);
+            if (string.IsNullOrEmpty(plcom.path))
+            {
+
+                tag = new Tag(plcom.ipAddress, plcom.cput, plcom.tagname, plcom.dtInt, plcom.elemCount);
+            }
+            else
+            {
+                tag = new Tag(plcom.ipAddress, plcom.path, plcom.cput, plcom.tagname, plcom.dtInt, plcom.elemCount);
+            }
+
+            // add the tag
+            client.AddTag(tag);
+
+            // check that connection is successful
+            while (client.GetStatus(tag) == Libplctag.PLCTAG_STATUS_PENDING)
+            {
+                Thread.Sleep(100);
+            }
+
+            if (client.GetStatus(tag) != Libplctag.PLCTAG_STATUS_OK)
+            {
+                Console.WriteLine($"Error setting up tag internal state. Error {client.DecodeError(client.GetStatus(tag))}\n");
+                return;
+            }
+
             if (!WriteCheckBox.Checked)
             {
                 Console.WriteLine("reading from PLC");
-                // access and format form data
-                PLCommunication plcom = new PLCommunication(IPAddTextBox.Text.Trim(), (PathComboBox.SelectedIndex + 1).ToString().Trim(), 
-                    SlotTextBox.Text.Trim(), CpuTypeComboBox.Text.Trim(), TagNameTextBox.Text.Trim(), DataTypeComboBox.Text, 
-                    Int32.Parse(ElementCountTextBox.Text), WriteCheckBox.Checked, WriteValueTextBox.Text);
-   
-                // create instance of plc client
-                var client = new Libplctag();
-
-                // create the tag
-                var tag = new Tag("ip address", "path", CpuType.LGX, "nameOfTag", DataType.Float32, 1);
-                if (string.IsNullOrEmpty(plcom.path))
-                {
-                    
-                    tag = new Tag(plcom.ipAddress, plcom.cput, plcom.tagname, plcom.dtInt, plcom.elemCount);
-                }
-                else
-                {
-                    tag = new Tag(plcom.ipAddress, plcom.path, plcom.cput, plcom.tagname, plcom.dtInt, plcom.elemCount);
-                }
-
-                // add the tag
-                client.AddTag(tag);
-
-                // check that connection is successful
-                while (client.GetStatus(tag) == Libplctag.PLCTAG_STATUS_PENDING)
-                {
-                    Thread.Sleep(100);
-                }
-
-                if (client.GetStatus(tag) != Libplctag.PLCTAG_STATUS_OK)
-                {
-                    Console.WriteLine($"Error setting up tag internal state. Error {client.DecodeError(client.GetStatus(tag))}\n");
-                    return;
-                }
 
                 // get the data
                 var rc = client.ReadTag(tag, 5000);
@@ -104,12 +105,12 @@ namespace PDC_Lauren
                             Console.WriteLine($"data[{i}]={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
                             MessageBox.Show($"{plcom.tagname}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
                             break;
-                        case "String":
-                            Console.WriteLine("data type identified as string");
-                            // not tested bc unable to find a string data type value on plc
-                            Console.WriteLine($"data[{i}]={client.ReadTag(tag, (i * tag.ElementSize))}\n");
-                            MessageBox.Show($"{plcom.tagname}={client.ReadTag(tag, (i * tag.ElementSize))}\n");
-                            break;
+                        //case "String":
+                        //    Console.WriteLine("data type identified as string");
+                        //    // not tested bc unable to find a string data type value on plc
+                        //    Console.WriteLine($"data[{i}]={client.ReadTag(tag, (i * tag.ElementSize))}\n");
+                        //    MessageBox.Show($"{plcom.tagname}={client.ReadTag(tag, (i * tag.ElementSize))}\n");
+                        //    break;
                         default:
                             Console.WriteLine("no data type identified");
                             MessageBox.Show("no data type identified");
