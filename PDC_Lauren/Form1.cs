@@ -36,87 +36,23 @@ namespace PDC_Lauren
             {
                 Console.WriteLine("reading from PLC");
                 // access and format form data
-                var ipAddress = IPAddTextBox.Text.Trim();
-                Console.WriteLine("IP Address: {0}", ipAddress);
-                Boolean isPath = false;
-                var path = "";
-                // check to see if path is specified
-                if (!(string.IsNullOrEmpty(SlotTextBox.Text) && string.IsNullOrEmpty(PathComboBox.Text)))
-                {
-                    // there is a path
-                    isPath = true;
-                    path = (PathComboBox.SelectedIndex + 1).ToString().Trim() + "," + SlotTextBox.Text.Trim();
-                }
-                Console.WriteLine("Path: {0}", path);
-                var cType = CpuTypeComboBox.Text.Trim();
-                CpuType ct = new CpuType();
-                if (cType.Equals("LGX"))
-                {
-                    ct = CpuType.LGX;
-                }
-                else if (cType.Equals("SLC"))
-                {
-                    ct = CpuType.SLC;
-                }
-                else if (cType.Equals("PLC5"))
-                {
-                    ct = CpuType.PLC5;
-                }
-                Console.WriteLine("Cpu Type: {0}", ct);
-                var tagName = TagNameTextBox.Text.Trim();
-                Console.WriteLine("Tag Name: {0}", tagName);
-
-                int dtn = 0;
-                int dt = -1;
-                if (DataTypeComboBox.SelectedIndex == 0)
-                {
-                    dtn = DataType.Int16;
-                    dt = 0;
-                }
-                else if (DataTypeComboBox.SelectedIndex == 1)
-                {
-                    dtn = DataType.Int8;
-                    dt = 1;
-                }
-                else if (DataTypeComboBox.SelectedIndex == 2)
-                {
-                    dtn = DataType.Int32;
-                    dt = 2;
-                }
-                else if (DataTypeComboBox.SelectedIndex == 3)
-                {
-                    dtn = DataType.Float32;
-                    dt = 3;
-                }
-                else if (DataTypeComboBox.SelectedIndex == 4)
-                {
-                    dtn = DataType.String;
-                    dt = 4;
-                }
-                Console.WriteLine("Data Type: {0},[{1}]", DataTypeComboBox.Text, dtn);
-                //int eCount = Int32.Parse(ElementCountTextBox.Text);
-                int eCount = 0;
-                bool result = Int32.TryParse(ElementCountTextBox.Text, out eCount);
-                if (result)
-                {
-                    Console.WriteLine("Element Count: {0}", eCount);
-                }
-                Console.WriteLine("Write to PLC: {0}", WriteCheckBox.CheckState);
-                Console.WriteLine("Value: {0}", WriteValueTextBox.Text);
-
+                PLCommunication plcom = new PLCommunication(IPAddTextBox.Text.Trim(), (PathComboBox.SelectedIndex + 1).ToString().Trim(), 
+                    SlotTextBox.Text.Trim(), CpuTypeComboBox.Text.Trim(), TagNameTextBox.Text.Trim(), DataTypeComboBox.Text, 
+                    Int32.Parse(ElementCountTextBox.Text), WriteCheckBox.Checked, WriteValueTextBox.Text);
+   
                 // create instance of plc client
                 var client = new Libplctag();
 
                 // create the tag
-                //var tag = new Tag("65.199.190.237", "1,0", CpuType.LGX, "testreal", DataType.Float32, 1);
                 var tag = new Tag("ip address", "path", CpuType.LGX, "nameOfTag", DataType.Float32, 1);
-                if (isPath)
+                if (string.IsNullOrEmpty(plcom.path))
                 {
-                    tag = new Tag(ipAddress, path, ct, tagName, dtn, eCount);
+                    
+                    tag = new Tag(plcom.ipAddress, plcom.cput, plcom.tagname, plcom.dtInt, plcom.elemCount);
                 }
                 else
                 {
-                    tag = new Tag(ipAddress, ct, tagName, dtn, eCount);
+                    tag = new Tag(plcom.ipAddress, plcom.path, plcom.cput, plcom.tagname, plcom.dtInt, plcom.elemCount);
                 }
 
                 // add the tag
@@ -146,35 +82,33 @@ namespace PDC_Lauren
                 // print data according to data type
                 for (int i = 0; i < tag.ElementCount; i++)
                 {
-                    switch (dt)
+                    switch (plcom.dtString)
                     {
-                        case 0:
+                        case "Int16":
                             Console.WriteLine("data type identified as int16");
                             Console.WriteLine($"data[{i}]={client.GetInt16Value(tag, (i * tag.ElementSize))}\n");
-                            MessageBox.Show($"{tagName}={client.GetInt16Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{plcom.tagname}={client.GetInt16Value(tag, (i * tag.ElementSize))}\n");
                             break;
-                        case 1:
+                        case "Int8":
                             Console.WriteLine("data type identified as int8");
                             Console.WriteLine($"data[{i}]={client.GetInt8Value(tag, (i * tag.ElementSize))}\n");
-                            MessageBox.Show($"{tagName}={client.GetInt8Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{plcom.tagname}={client.GetInt8Value(tag, (i * tag.ElementSize))}\n");
                             break;
-                        case 2:
+                        case "Int32":
                             Console.WriteLine("data type identified as int32");
                             Console.WriteLine($"data[{i}]={client.GetInt32Value(tag, (i * tag.ElementSize))}\n");
-                            MessageBox.Show($"{tagName}={client.GetInt32Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{plcom.tagname}={client.GetInt32Value(tag, (i * tag.ElementSize))}\n");
                             break;
-                        case 3:
+                        case "Float32":
                             Console.WriteLine("data type identified as float32");
                             Console.WriteLine($"data[{i}]={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
-                            MessageBox.Show($"{tagName}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
-                            // the line below reads value as integer
-                            // Console.WriteLine($"data[{i}]={client.ReadTag(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{plcom.tagname}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
                             break;
-                        case 4:
+                        case "String":
                             Console.WriteLine("data type identified as string");
                             // not tested bc unable to find a string data type value on plc
                             Console.WriteLine($"data[{i}]={client.ReadTag(tag, (i * tag.ElementSize))}\n");
-                            MessageBox.Show($"{tagName}={client.ReadTag(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{plcom.tagname}={client.ReadTag(tag, (i * tag.ElementSize))}\n");
                             break;
                         default:
                             Console.WriteLine("no data type identified");
