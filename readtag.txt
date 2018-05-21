@@ -1,0 +1,35 @@
+ // create instance of plc client
+            var client = new Libplctag();
+
+            // create the tag
+            var tag = new Tag("65.199.190.237", "1,0", CpuType.LGX, "testreal", DataType.Float32, 1);
+
+            // add the tag
+            client.AddTag(tag);
+
+            // check that connection is successful
+            while (client.GetStatus(tag) == Libplctag.PLCTAG_STATUS_PENDING)
+            {
+                Thread.Sleep(100);
+            }
+
+            if (client.GetStatus(tag) != Libplctag.PLCTAG_STATUS_OK)
+            {
+                Console.WriteLine($"Error setting up tag internal state. Error {client.DecodeError(client.GetStatus(tag))}\n");
+                return;
+            }
+
+            // get the data
+            var rc = client.ReadTag(tag, 5000);
+
+            if (rc != Libplctag.PLCTAG_STATUS_OK)
+            {
+                Console.WriteLine($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n");
+                return;
+            }
+
+            // print data
+            for (int i = 0; i < tag.ElementCount; i++)
+            {
+                Console.WriteLine($"data[{i}]={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
+            }
