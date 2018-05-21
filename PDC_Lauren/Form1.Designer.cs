@@ -28,10 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.DataTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.CpuTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.PathComboBox = new System.Windows.Forms.ComboBox();
+            this.WriteValueTextBox = new System.Windows.Forms.TextBox();
+            this.ElementCountTextBox = new System.Windows.Forms.TextBox();
+            this.TagNameTextBox = new System.Windows.Forms.TextBox();
+            this.SlotTextBox = new System.Windows.Forms.TextBox();
+            this.IPAddTextBox = new System.Windows.Forms.TextBox();
             this.connectButton = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.WriteCheckBox = new System.Windows.Forms.CheckBox();
@@ -44,23 +50,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.IPAddTextBox = new System.Windows.Forms.TextBox();
-            this.SlotTextBox = new System.Windows.Forms.TextBox();
-            this.TagNameTextBox = new System.Windows.Forms.TextBox();
-            this.ElementCountTextBox = new System.Windows.Forms.TextBox();
-            this.WriteValueTextBox = new System.Windows.Forms.TextBox();
-            this.PathComboBox = new System.Windows.Forms.ComboBox();
-            this.CpuTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.DataTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // toolTip1
-            // 
-            this.toolTip1.ToolTipTitle = "Topic Name on RSLinx (case-sensitive)";
-            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
             // tabControl1
             // 
@@ -75,7 +67,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.statusStrip1);
             this.tabPage1.Controls.Add(this.DataTypeComboBox);
             this.tabPage1.Controls.Add(this.CpuTypeComboBox);
             this.tabPage1.Controls.Add(this.PathComboBox);
@@ -104,8 +95,82 @@
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // DataTypeComboBox
+            // 
+            this.DataTypeComboBox.FormattingEnabled = true;
+            this.DataTypeComboBox.Items.AddRange(new object[] {
+            "Int16",
+            "Int8",
+            "Int32",
+            "Float32",
+            "String"});
+            this.DataTypeComboBox.Location = new System.Drawing.Point(266, 233);
+            this.DataTypeComboBox.Name = "DataTypeComboBox";
+            this.DataTypeComboBox.Size = new System.Drawing.Size(358, 21);
+            this.DataTypeComboBox.TabIndex = 18;
+            // 
+            // CpuTypeComboBox
+            // 
+            this.CpuTypeComboBox.FormattingEnabled = true;
+            this.CpuTypeComboBox.Items.AddRange(new object[] {
+            "LGX",
+            "SLC",
+            "PLC5"});
+            this.CpuTypeComboBox.Location = new System.Drawing.Point(266, 168);
+            this.CpuTypeComboBox.Name = "CpuTypeComboBox";
+            this.CpuTypeComboBox.Size = new System.Drawing.Size(358, 21);
+            this.CpuTypeComboBox.TabIndex = 17;
+            // 
+            // PathComboBox
+            // 
+            this.PathComboBox.FormattingEnabled = true;
+            this.PathComboBox.Items.AddRange(new object[] {
+            "Backplane",
+            "Control Net/Ethernet, DH+ Channel A, DH+ Channel B",
+            "Serial"});
+            this.PathComboBox.Location = new System.Drawing.Point(266, 103);
+            this.PathComboBox.Name = "PathComboBox";
+            this.PathComboBox.Size = new System.Drawing.Size(358, 21);
+            this.PathComboBox.TabIndex = 16;
+            // 
+            // WriteValueTextBox
+            // 
+            this.WriteValueTextBox.Location = new System.Drawing.Point(266, 325);
+            this.WriteValueTextBox.Name = "WriteValueTextBox";
+            this.WriteValueTextBox.Size = new System.Drawing.Size(359, 20);
+            this.WriteValueTextBox.TabIndex = 15;
+            // 
+            // ElementCountTextBox
+            // 
+            this.ElementCountTextBox.Location = new System.Drawing.Point(266, 266);
+            this.ElementCountTextBox.Name = "ElementCountTextBox";
+            this.ElementCountTextBox.Size = new System.Drawing.Size(359, 20);
+            this.ElementCountTextBox.TabIndex = 14;
+            // 
+            // TagNameTextBox
+            // 
+            this.TagNameTextBox.Location = new System.Drawing.Point(266, 201);
+            this.TagNameTextBox.Name = "TagNameTextBox";
+            this.TagNameTextBox.Size = new System.Drawing.Size(359, 20);
+            this.TagNameTextBox.TabIndex = 13;
+            // 
+            // SlotTextBox
+            // 
+            this.SlotTextBox.Location = new System.Drawing.Point(266, 136);
+            this.SlotTextBox.Name = "SlotTextBox";
+            this.SlotTextBox.Size = new System.Drawing.Size(359, 20);
+            this.SlotTextBox.TabIndex = 12;
+            // 
+            // IPAddTextBox
+            // 
+            this.IPAddTextBox.Location = new System.Drawing.Point(266, 71);
+            this.IPAddTextBox.Name = "IPAddTextBox";
+            this.IPAddTextBox.Size = new System.Drawing.Size(359, 20);
+            this.IPAddTextBox.TabIndex = 11;
+            // 
             // connectButton
             // 
+            this.connectButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.connectButton.Location = new System.Drawing.Point(644, 350);
             this.connectButton.Name = "connectButton";
             this.connectButton.Size = new System.Drawing.Size(120, 35);
@@ -122,7 +187,6 @@
             this.label9.Size = new System.Drawing.Size(74, 13);
             this.label9.TabIndex = 9;
             this.label9.Text = "Value to Write";
-            //this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // WriteCheckBox
             // 
@@ -143,7 +207,6 @@
             this.label8.Size = new System.Drawing.Size(57, 13);
             this.label8.TabIndex = 7;
             this.label8.Text = "Data Type";
-            //this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label7
             // 
@@ -153,7 +216,6 @@
             this.label7.Size = new System.Drawing.Size(53, 13);
             this.label7.TabIndex = 6;
             this.label7.Text = "Cpu Type";
-            //this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label6
             // 
@@ -163,7 +225,6 @@
             this.label6.Size = new System.Drawing.Size(25, 13);
             this.label6.TabIndex = 5;
             this.label6.Text = "Slot";
-            //this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // label5
             // 
@@ -173,7 +234,6 @@
             this.label5.Size = new System.Drawing.Size(29, 13);
             this.label5.TabIndex = 4;
             this.label5.Text = "Path";
-            //this.label5.Click += new System.EventHandler(this.label5_Click_1);
             // 
             // label4
             // 
@@ -183,7 +243,6 @@
             this.label4.Size = new System.Drawing.Size(76, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Element Count";
-            //this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 
@@ -193,7 +252,6 @@
             this.label3.Size = new System.Drawing.Size(57, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Tag Name";
-            //this.label3.Click += new System.EventHandler(this.label3_Click_1);
             // 
             // label2
             // 
@@ -203,7 +261,6 @@
             this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "IP Address";
-            //this.label2.Click += new System.EventHandler(this.label2_Click_1);
             // 
             // label1
             // 
@@ -214,7 +271,6 @@
             this.label1.Size = new System.Drawing.Size(70, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "RSLinx";
-            //this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // tabPage2
             // 
@@ -226,87 +282,6 @@
             this.tabPage2.Text = "SQL";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
-            // 
-            // IPAddTextBox
-            // 
-            this.IPAddTextBox.Location = new System.Drawing.Point(266, 71);
-            this.IPAddTextBox.Name = "IPAddTextBox";
-            this.IPAddTextBox.Size = new System.Drawing.Size(359, 20);
-            this.IPAddTextBox.TabIndex = 11;
-            // 
-            // SlotTextBox
-            // 
-            this.SlotTextBox.Location = new System.Drawing.Point(266, 136);
-            this.SlotTextBox.Name = "SlotTextBox";
-            this.SlotTextBox.Size = new System.Drawing.Size(359, 20);
-            this.SlotTextBox.TabIndex = 12;
-            // 
-            // TagNameTextBox
-            // 
-            this.TagNameTextBox.Location = new System.Drawing.Point(266, 201);
-            this.TagNameTextBox.Name = "TagNameTextBox";
-            this.TagNameTextBox.Size = new System.Drawing.Size(359, 20);
-            this.TagNameTextBox.TabIndex = 13;
-            // 
-            // ElementCountTextBox
-            // 
-            this.ElementCountTextBox.Location = new System.Drawing.Point(266, 266);
-            this.ElementCountTextBox.Name = "ElementCountTextBox";
-            this.ElementCountTextBox.Size = new System.Drawing.Size(359, 20);
-            this.ElementCountTextBox.TabIndex = 14;
-            // 
-            // WriteValueTextBox
-            // 
-            this.WriteValueTextBox.Location = new System.Drawing.Point(266, 325);
-            this.WriteValueTextBox.Name = "WriteValueTextBox";
-            this.WriteValueTextBox.Size = new System.Drawing.Size(359, 20);
-            this.WriteValueTextBox.TabIndex = 15;
-            // 
-            // PathComboBox
-            // 
-            this.PathComboBox.FormattingEnabled = true;
-            this.PathComboBox.Items.AddRange(new object[] {
-            "Backplane",
-            "Control Net/Ethernet, DH+ Channel A, DH+ Channel B",
-            "Serial"});
-            this.PathComboBox.Location = new System.Drawing.Point(266, 103);
-            this.PathComboBox.Name = "PathComboBox";
-            this.PathComboBox.Size = new System.Drawing.Size(358, 21);
-            this.PathComboBox.TabIndex = 16;
-            // 
-            // CpuTypeComboBox
-            // 
-            this.CpuTypeComboBox.FormattingEnabled = true;
-            this.CpuTypeComboBox.Items.AddRange(new object[] {
-            "LGX",
-            "SLC",
-            "PLC5"});
-            this.CpuTypeComboBox.Location = new System.Drawing.Point(266, 168);
-            this.CpuTypeComboBox.Name = "CpuTypeComboBox";
-            this.CpuTypeComboBox.Size = new System.Drawing.Size(358, 21);
-            this.CpuTypeComboBox.TabIndex = 17;
-            // 
-            // DataTypeComboBox
-            // 
-            this.DataTypeComboBox.FormattingEnabled = true;
-            this.DataTypeComboBox.Items.AddRange(new object[] {
-            "Int16",
-            "Int8",
-            "Int32",
-            "Float32",
-            "String"});
-            this.DataTypeComboBox.Location = new System.Drawing.Point(266, 233);
-            this.DataTypeComboBox.Name = "DataTypeComboBox";
-            this.DataTypeComboBox.Size = new System.Drawing.Size(358, 21);
-            this.DataTypeComboBox.TabIndex = 18;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(3, 399);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(786, 22);
-            this.statusStrip1.TabIndex = 19;
-            this.statusStrip1.Text = "statusStrip1";
             // 
             // Form1
             // 
@@ -324,7 +299,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -347,7 +321,6 @@
         private System.Windows.Forms.TextBox TagNameTextBox;
         private System.Windows.Forms.TextBox SlotTextBox;
         private System.Windows.Forms.TextBox IPAddTextBox;
-        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
 
