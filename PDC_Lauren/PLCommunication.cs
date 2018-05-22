@@ -39,7 +39,7 @@ namespace PDC_Lauren
                 }
             }
             //this.path = path + "," + slot;
-            Console.WriteLine("path: " + this.path);
+            //Console.WriteLine("path: " + this.path);
             // cpu type format
             if (cput.Equals("LGX"))
             {

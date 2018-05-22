@@ -107,6 +107,7 @@
             this.DataTypeComboBox.Name = "DataTypeComboBox";
             this.DataTypeComboBox.Size = new System.Drawing.Size(358, 21);
             this.DataTypeComboBox.TabIndex = 18;
+            this.DataTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.DataTypeComboBox_SelectedIndexChanged);
             // 
             // CpuTypeComboBox
             // 
@@ -138,6 +139,7 @@
             this.WriteValueTextBox.Name = "WriteValueTextBox";
             this.WriteValueTextBox.Size = new System.Drawing.Size(359, 20);
             this.WriteValueTextBox.TabIndex = 15;
+            this.WriteValueTextBox.TextChanged += new System.EventHandler(this.WriteValueTextBox_TextChanged);
             // 
             // ElementCountTextBox
             // 

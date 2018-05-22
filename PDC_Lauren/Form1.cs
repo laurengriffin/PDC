@@ -18,6 +18,8 @@ namespace PDC_Lauren
         public Form1()
         {
             InitializeComponent();
+            WriteValueTextBox.Visible = false;
+            label9.Visible = false;
         }
 
         private void TableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -65,7 +67,6 @@ namespace PDC_Lauren
                 return;
             }
 
-            Console.WriteLine("reading from PLC");
             // get the data from the form
             var rc = client.ReadTag(tag, 5000);
             if (rc != Libplctag.PLCTAG_STATUS_OK)
@@ -74,18 +75,12 @@ namespace PDC_Lauren
                 return;
             }
 
-            // if reading from the plc
+            // determine if reading or writing to plc
             if (!WriteCheckBox.Checked)
             {
-                //Console.WriteLine("reading from PLC");
-                //// get the data from the form
-                //var rc = client.ReadTag(tag, 5000);
-                //if (rc != Libplctag.PLCTAG_STATUS_OK)
-                //{
-                //    Console.WriteLine($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n");
-                //    return;
-                //}
+                // if reading from the plc
                 // print data according to data type
+                Console.WriteLine("reading from the plc");
                 for (int i = 0; i < tag.ElementCount; i++)
                 {
                     switch (plcom.dtString)
@@ -112,23 +107,22 @@ namespace PDC_Lauren
                             break;
                         // haven't tested the string data type
                         //case "String":
-                        //    Console.WriteLine("data type identified as string");
-                        //    // not tested bc unable to find a string data type value on plc
-                        //    Console.WriteLine($"data[{i}]={client.ReadTag(tag, (i * tag.ElementSize))}\n");
-                        //    MessageBox.Show($"{plcom.tagname}={client.ReadTag(tag, (i * tag.ElementSize))}\n");
-                        //    break;
+                            //Console.WriteLine("data type identified as string");
+                            // not tested bc unable to find a string data type value on plc
+                            //Console.WriteLine($"data[{i}]={client.ReadTag(tag, (i * tag.ElementSize))}\n");
+                            //MessageBox.Show($"{plcom.tagname}={client.ReadTag(tag, (i * tag.ElementSize))}\n");
+                            //break;
                         default:
                             Console.WriteLine("no data type identified");
                             MessageBox.Show("no data type identified");
                             break;
                     }
                 }
-
             }
             else if (WriteCheckBox.Checked)
             {
+                // if writing to plc
                 Console.WriteLine("writing to PLC");
-                //var val = plcom.valToWrite;
                 for (int i = 0; i < plcom.elemCount; i++)
                 {
                     switch (plcom.dtString)
@@ -166,17 +160,39 @@ namespace PDC_Lauren
                     return;
                 }
 
+                // print the new value that was written to the tag
                 for (int i = 0; i < tag.ElementCount; i++)
                 {
-                    MessageBox.Show($"data[{plcom.tagname}]={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
+                    switch (plcom.dtString)
+                    {
+                        case "Int16":
+                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt16Value(tag, (i * tag.ElementSize))}\n");
+                            break;
+                        case "Int8":
+                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt8Value(tag, (i * tag.ElementSize))}\n");
+                            break;
+                        case "Int32":
+                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt32Value(tag, (i * tag.ElementSize))}\n");
+                            break;
+                        case "Float32":
+                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
+                            break;
+                        default:
+                            break;
+                    }
+                    
                 }
             }
             else
             {
+                // not sure if should read or write to plc
                 Console.WriteLine("'Write to PLC' checkbox value is unknown. unable to perform any operation.");
                 Console.WriteLine("checked? " + WriteCheckBox.Checked);
             }
-            
+
+            // close and cleanup resources
+            client.Dispose();
+            Console.Read();
         }
 
         // unused
@@ -200,8 +216,18 @@ namespace PDC_Lauren
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
+            WriteValueTextBox.Visible = !WriteValueTextBox.Visible;
+            label9.Visible = !label9.Visible;
+        }
+
+        private void DataTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
 
+        private void WriteValueTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
