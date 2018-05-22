@@ -64,16 +64,27 @@ namespace PDC_Lauren
                 Console.WriteLine($"Error setting up tag internal state. Error {client.DecodeError(client.GetStatus(tag))}\n");
                 return;
             }
+
+            Console.WriteLine("reading from PLC");
+            // get the data from the form
+            var rc = client.ReadTag(tag, 5000);
+            if (rc != Libplctag.PLCTAG_STATUS_OK)
+            {
+                Console.WriteLine($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n");
+                return;
+            }
+
+            // if reading from the plc
             if (!WriteCheckBox.Checked)
             {
-                Console.WriteLine("reading from PLC");
-                // get the data from the form
-                var rc = client.ReadTag(tag, 5000);
-                if (rc != Libplctag.PLCTAG_STATUS_OK)
-                {
-                    Console.WriteLine($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n");
-                    return;
-                }
+                //Console.WriteLine("reading from PLC");
+                //// get the data from the form
+                //var rc = client.ReadTag(tag, 5000);
+                //if (rc != Libplctag.PLCTAG_STATUS_OK)
+                //{
+                //    Console.WriteLine($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n");
+                //    return;
+                //}
                 // print data according to data type
                 for (int i = 0; i < tag.ElementCount; i++)
                 {
@@ -117,6 +128,48 @@ namespace PDC_Lauren
             else if (WriteCheckBox.Checked)
             {
                 Console.WriteLine("writing to PLC");
+                //var val = plcom.valToWrite;
+                for (int i = 0; i < plcom.elemCount; i++)
+                {
+                    switch (plcom.dtString)
+                    {
+                        case "Int16":
+                            Int16 val0 = Convert.ToInt16(plcom.valToWrite);
+                            Console.WriteLine($"Setting element {plcom.tagname} to {val0}\n");
+                            client.SetInt16Value(tag, (i * tag.ElementSize), val0);
+                            break;
+                        case "Int8":
+                            sbyte val1 = sbyte.Parse(plcom.valToWrite);
+                            Console.WriteLine($"Setting element {plcom.tagname} to {val1}\n");
+                            client.SetInt8Value(tag, (i * tag.ElementSize), val1);
+                            break;
+                        case "Int32":
+                            Int32 val2 = Convert.ToInt32(plcom.valToWrite);
+                            Console.WriteLine($"Setting element {plcom.tagname} to {val2}\n");
+                            client.SetInt32Value(tag, (i * tag.ElementSize), val2);
+                            break;
+                        case "Float32":
+                            float val3 = float.Parse(plcom.valToWrite);
+                            Console.WriteLine($"Setting element {plcom.tagname} to {val3}\n");
+                            client.SetFloat32Value(tag, (i * tag.ElementSize), val3);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                rc = client.WriteTag(tag, 5000);
+
+                if (rc != Libplctag.PLCTAG_STATUS_OK)
+                {
+                    Console.WriteLine($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(rc)}\n");
+                    return;
+                }
+
+                for (int i = 0; i < tag.ElementCount; i++)
+                {
+                    MessageBox.Show($"data[{plcom.tagname}]={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
+                }
             }
             else
             {
