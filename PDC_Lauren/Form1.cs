@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -228,6 +229,62 @@ namespace PDC_Lauren
         private void WriteValueTextBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void sqlConnectButton_Click(object sender, EventArgs e)
+        {
+            SQLCommunication connection = new SQLCommunication(serverNameTextBox.Text, databaseNameTextBox.Text, userNameTextBox.Text, passwordTextBox.Text);
+            MessageBox.Show("connection string = " + connection.cs);
+            using (SqlConnection sqlc = new SqlConnection(connection.cs))
+            {
+                sqlc.Open();
+                MessageBox.Show("connection open");
+                Console.WriteLine("ServerVersion: {0}", sqlc.ServerVersion);
+                Console.WriteLine("State: {0}", sqlc.State);
+                sqlc.Close();
+                Console.WriteLine("Connection Closed");
+            }
+            
         }
     }
 }
