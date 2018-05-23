@@ -13,16 +13,18 @@ namespace PDC_Lauren
         public string databaseName;
         public string userName;
         public string password;
+        public string tableName;
         public string cs;
 
         // sqlcommunication constructor
         // creates the connection string
-        public SQLCommunication(string serverName, string databaseName, string userName, string password)
+        public SQLCommunication(string serverName, string databaseName, string userName, string password, string tableName)
         {
             this.serverName = serverName;
             this.databaseName = databaseName;
             this.userName = userName;
             this.password = password;
+            this.tableName = tableName;
             this.cs = "Data Source=" + this.serverName + ";" +
                 "Initial Catalog=" + this.databaseName + ";" +
                 "User ID=" + this.userName + ";" +

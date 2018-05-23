@@ -74,11 +74,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLCommunication.cs" />
-    <Compile Include="Steve_test_WestonDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Steve_test_WestonDataSet.xsd</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,17 +98,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Steve_test_WestonDataSet.xsc">
-      <DependentUpon>Steve_test_WestonDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="Steve_test_WestonDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Steve_test_WestonDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Steve_test_WestonDataSet.xss">
-      <DependentUpon>Steve_test_WestonDataSet.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

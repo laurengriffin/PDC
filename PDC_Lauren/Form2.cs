@@ -16,25 +16,5 @@ namespace PDC_Lauren
         {
             InitializeComponent();
         }
-
-        private void ingredientBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.ingredientBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.steve_test_WestonDataSet);
-
-        }
-
-        private void Form2_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'steve_test_WestonDataSet.Ingredient' table. You can move, or remove it, as needed.
-            this.ingredientTableAdapter.Fill(this.steve_test_WestonDataSet.Ingredient);
-
-        }
-
-        private void ingredientDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

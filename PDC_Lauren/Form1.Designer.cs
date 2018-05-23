@@ -50,16 +50,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.serverNameTextBox = new System.Windows.Forms.TextBox();
-            this.databaseNameTextBox = new System.Windows.Forms.TextBox();
-            this.userNameTextBox = new System.Windows.Forms.TextBox();
-            this.passwordTextBox = new System.Windows.Forms.TextBox();
+            this.tableNameTextBox = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.sqlConnectButton = new System.Windows.Forms.Button();
+            this.passwordTextBox = new System.Windows.Forms.TextBox();
+            this.userNameTextBox = new System.Windows.Forms.TextBox();
+            this.databaseNameTextBox = new System.Windows.Forms.TextBox();
+            this.serverNameTextBox = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -287,6 +289,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.tableNameTextBox);
+            this.tabPage2.Controls.Add(this.label15);
             this.tabPage2.Controls.Add(this.sqlConnectButton);
             this.tabPage2.Controls.Add(this.passwordTextBox);
             this.tabPage2.Controls.Add(this.userNameTextBox);
@@ -306,6 +310,104 @@
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
+            // tableNameTextBox
+            // 
+            this.tableNameTextBox.Location = new System.Drawing.Point(297, 226);
+            this.tableNameTextBox.Name = "tableNameTextBox";
+            this.tableNameTextBox.Size = new System.Drawing.Size(288, 20);
+            this.tableNameTextBox.TabIndex = 9;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(226, 233);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(65, 13);
+            this.label15.TabIndex = 10;
+            this.label15.Text = "Table Name";
+            // 
+            // sqlConnectButton
+            // 
+            this.sqlConnectButton.Location = new System.Drawing.Point(579, 320);
+            this.sqlConnectButton.Name = "sqlConnectButton";
+            this.sqlConnectButton.Size = new System.Drawing.Size(135, 40);
+            this.sqlConnectButton.TabIndex = 10;
+            this.sqlConnectButton.Text = "Connect";
+            this.sqlConnectButton.UseVisualStyleBackColor = true;
+            this.sqlConnectButton.Click += new System.EventHandler(this.sqlConnectButton_Click);
+            // 
+            // passwordTextBox
+            // 
+            this.passwordTextBox.Location = new System.Drawing.Point(297, 195);
+            this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.Size = new System.Drawing.Size(288, 20);
+            this.passwordTextBox.TabIndex = 8;
+            this.passwordTextBox.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            // 
+            // userNameTextBox
+            // 
+            this.userNameTextBox.Location = new System.Drawing.Point(297, 164);
+            this.userNameTextBox.Name = "userNameTextBox";
+            this.userNameTextBox.Size = new System.Drawing.Size(288, 20);
+            this.userNameTextBox.TabIndex = 7;
+            this.userNameTextBox.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // databaseNameTextBox
+            // 
+            this.databaseNameTextBox.Location = new System.Drawing.Point(297, 133);
+            this.databaseNameTextBox.Name = "databaseNameTextBox";
+            this.databaseNameTextBox.Size = new System.Drawing.Size(288, 20);
+            this.databaseNameTextBox.TabIndex = 6;
+            this.databaseNameTextBox.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // serverNameTextBox
+            // 
+            this.serverNameTextBox.Location = new System.Drawing.Point(297, 102);
+            this.serverNameTextBox.Name = "serverNameTextBox";
+            this.serverNameTextBox.Size = new System.Drawing.Size(288, 20);
+            this.serverNameTextBox.TabIndex = 5;
+            this.serverNameTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(238, 202);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(53, 13);
+            this.label14.TabIndex = 4;
+            this.label14.Text = "Password";
+            this.label14.Click += new System.EventHandler(this.label14_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(236, 171);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(55, 13);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "Username";
+            this.label13.Click += new System.EventHandler(this.label13_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(207, 140);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(84, 13);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "Database Name";
+            this.label12.Click += new System.EventHandler(this.label12_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(222, 109);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(69, 13);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "Server Name";
+            this.label11.Click += new System.EventHandler(this.label11_Click);
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -316,88 +418,6 @@
             this.label10.TabIndex = 0;
             this.label10.Text = "SQL";
             this.label10.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(222, 141);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(69, 13);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "Server Name";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(207, 172);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(84, 13);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "Database Name";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(236, 203);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(55, 13);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Username";
-            this.label13.Click += new System.EventHandler(this.label13_Click);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(238, 234);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(53, 13);
-            this.label14.TabIndex = 4;
-            this.label14.Text = "Password";
-            this.label14.Click += new System.EventHandler(this.label14_Click);
-            // 
-            // serverNameTextBox
-            // 
-            this.serverNameTextBox.Location = new System.Drawing.Point(297, 134);
-            this.serverNameTextBox.Name = "serverNameTextBox";
-            this.serverNameTextBox.Size = new System.Drawing.Size(288, 20);
-            this.serverNameTextBox.TabIndex = 5;
-            this.serverNameTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
-            // 
-            // databaseNameTextBox
-            // 
-            this.databaseNameTextBox.Location = new System.Drawing.Point(297, 165);
-            this.databaseNameTextBox.Name = "databaseNameTextBox";
-            this.databaseNameTextBox.Size = new System.Drawing.Size(288, 20);
-            this.databaseNameTextBox.TabIndex = 6;
-            this.databaseNameTextBox.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            // 
-            // userNameTextBox
-            // 
-            this.userNameTextBox.Location = new System.Drawing.Point(297, 196);
-            this.userNameTextBox.Name = "userNameTextBox";
-            this.userNameTextBox.Size = new System.Drawing.Size(288, 20);
-            this.userNameTextBox.TabIndex = 7;
-            this.userNameTextBox.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
-            // 
-            // passwordTextBox
-            // 
-            this.passwordTextBox.Location = new System.Drawing.Point(297, 227);
-            this.passwordTextBox.Name = "passwordTextBox";
-            this.passwordTextBox.Size = new System.Drawing.Size(288, 20);
-            this.passwordTextBox.TabIndex = 8;
-            this.passwordTextBox.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
-            // 
-            // sqlConnectButton
-            // 
-            this.sqlConnectButton.Location = new System.Drawing.Point(579, 320);
-            this.sqlConnectButton.Name = "sqlConnectButton";
-            this.sqlConnectButton.Size = new System.Drawing.Size(135, 40);
-            this.sqlConnectButton.TabIndex = 9;
-            this.sqlConnectButton.Text = "Connect";
-            this.sqlConnectButton.UseVisualStyleBackColor = true;
-            this.sqlConnectButton.Click += new System.EventHandler(this.sqlConnectButton_Click);
             // 
             // Form1
             // 
@@ -449,6 +469,8 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button sqlConnectButton;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox tableNameTextBox;
     }
 }
 
