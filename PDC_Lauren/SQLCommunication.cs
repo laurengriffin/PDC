@@ -9,26 +9,26 @@ namespace PDC_Lauren
 {
     class SQLCommunication
     {
-        public string serverName;
-        public string databaseName;
-        public string userName;
-        public string password;
-        public string tableName;
-        public string cs;
+        public static string serverName;
+        public static string databaseName;
+        public static string userName;
+        public static string password;
+        public static string tableName;
+        public static string cs;
 
         // sqlcommunication constructor
         // creates the connection string
-        public SQLCommunication(string serverName, string databaseName, string userName, string password, string tableName)
+        public SQLCommunication(string serverName, string databaseName, string userName, string password)
         {
-            this.serverName = serverName;
-            this.databaseName = databaseName;
-            this.userName = userName;
-            this.password = password;
-            this.tableName = tableName;
-            this.cs = "Data Source=" + this.serverName + ";" +
-                "Initial Catalog=" + this.databaseName + ";" +
-                "User ID=" + this.userName + ";" +
-                "Password=" + this.password;
+            SQLCommunication.serverName = serverName;
+            SQLCommunication.databaseName = databaseName;
+            SQLCommunication.userName = userName;
+            SQLCommunication.password = password;
+            //SQLCommunication.tableName = tableName;
+            SQLCommunication.cs = "Data Source=" + SQLCommunication.serverName + ";" +
+                "Initial Catalog=" + SQLCommunication.databaseName + ";" +
+                "User ID=" + SQLCommunication.userName + ";" +
+                "Password=" + SQLCommunication.password;
         }
     }
 }

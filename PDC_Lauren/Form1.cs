@@ -274,49 +274,59 @@ namespace PDC_Lauren
         private void sqlConnectButton_Click(object sender, EventArgs e)
         {
             // TODO: display data
-            SQLCommunication connection = new SQLCommunication(serverNameTextBox.Text, databaseNameTextBox.Text, userNameTextBox.Text, passwordTextBox.Text, tableNameTextBox.Text);
-            MessageBox.Show("connection string = " + connection.cs);
-            using (SqlConnection sqlc = new SqlConnection(connection.cs))
+            SQLCommunication connection = new SQLCommunication(serverNameTextBox.Text, databaseNameTextBox.Text, userNameTextBox.Text, passwordTextBox.Text);
+            MessageBox.Show("connection string = " + SQLCommunication.cs);
+            using (SqlConnection sqlc = new SqlConnection(SQLCommunication.cs))
             {
                 sqlc.Open();
                 MessageBox.Show("connection open");
                 Console.WriteLine("ServerVersion: {0}", sqlc.ServerVersion);
                 Console.WriteLine("State: {0}", sqlc.State);
 
+                // open form 2 to display list of tables in designated database
+                Form2 frm2 = new Form2();
+
+                //this.Visible = false;
+                frm2.Visible = true;
+                //this.Close();
+
                 // get the meta data for supported schema collections
-                DataTable metaDataTable = sqlc.GetSchema("MetaDataCollections");
-                Console.WriteLine("Meta Data for Supported Schema Collections:");
-                ShowDataTable(metaDataTable, 25);
-                Console.WriteLine();
+                //DataTable metaDataTable = sqlc.GetSchema("MetaDataCollections");
+                //Console.WriteLine("Meta Data for Supported Schema Collections:");
+                //ShowDataTable(metaDataTable, 25);
+                //Console.WriteLine();
 
                 // get the schema information of databases in your instance
-                DataTable databasesSchemaTable = sqlc.GetSchema("Databases");
-                Console.WriteLine("Schema Information of Databases:");
-                ShowDataTable(databasesSchemaTable, 25);
-                Console.WriteLine();
+                //DataTable databasesSchemaTable = sqlc.GetSchema("Databases");
+                //Console.WriteLine("Schema Information of Databases:");
+                //ShowDataTable(databasesSchemaTable, 25);
+                //Console.WriteLine();
 
                 // You can specify the [0]Catalog, [1]Schema, [2]Table Name, [3]Table Type to get the specified table(s)
                 String[] tableRestrictions = new string[4];
-                tableRestrictions[2] = "Ingredient";
+                //tableRestrictions[2] = "Ingredient";
+                tableRestrictions[0] = databaseNameTextBox.Text.Trim();
+                Console.WriteLine("Tables in the specified database: " + tableRestrictions[0]);
 
                 DataTable courseTableSchemaTable = sqlc.GetSchema("Tables", tableRestrictions);
-                Console.WriteLine("Schema Information of Course Tables: ");
+                Console.WriteLine("Schema Information of Tables: ");
+                
                 ShowDataTable(courseTableSchemaTable, 20);
                 Console.WriteLine();
 
-                DataTable allColumnsSchemaTable = sqlc.GetSchema("Columns");
-                Console.WriteLine("Schema Information of All Columns: ");
-                ShowColumns(allColumnsSchemaTable);
-                Console.WriteLine();
+                //DataTable allColumnsSchemaTable = sqlc.GetSchema("Columns");
+                //Console.WriteLine("Schema Information of All Columns: ");
+                //ShowColumns(allColumnsSchemaTable);
+                //Console.WriteLine();
 
                 // You can specify the [0]Catalog, [1]Schema, [2]Table Name, [3]Column Name to get the specified column(s)
-                String[] columnRestrictions = new string[4];
-                columnRestrictions[2] = "Ingredient";
-                columnRestrictions[3] = "IngrName";
+                //String[] columnRestrictions = new string[4];
+                //columnRestrictions[2] = "Ingredient";
+                //columnRestrictions[3] = "IngrName";
 
-                DataTable departmentIDSchemaTable = sqlc.GetSchema("Columns", columnRestrictions);
-                ShowColumns(departmentIDSchemaTable);
-                Console.WriteLine();
+                //DataTable departmentIDSchemaTable = sqlc.GetSchema("Columns", columnRestrictions);
+                //ShowColumns(departmentIDSchemaTable);
+                //Console.WriteLine();
 
                 sqlc.Close();
 
