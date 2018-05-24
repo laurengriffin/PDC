@@ -13,8 +13,10 @@ namespace PDC_Lauren
 {
     public partial class Form2 : Form
     {
-        private BindingSource bindingSource1 = new BindingSource();
-        private SqlDataAdapter dataAdapter = new SqlDataAdapter();
+        private BindingSource bindingSourceList = new BindingSource();
+        private BindingSource bindingSourceGrid = new BindingSource();
+        private SqlDataAdapter dataAdapter1 = new SqlDataAdapter();
+        private SqlDataAdapter dataAdapter2 = new SqlDataAdapter();
 
         public Form2()
         {
@@ -30,11 +32,30 @@ namespace PDC_Lauren
         {
             // bind the DataGridView to the BindingSource
             // and load data from database
-            dataGridView1.DataSource = bindingSource1;
-            GetData("select * from Ingredients");
+            tableNameComboBox.DataSource = bindingSourceList;
+            dataGridView1.DataSource = bindingSourceGrid;
+            GetData();
         }
 
-        private void GetData(string selectCommand)
+        private void tableNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tableNameComboBox.Text != "System.Data.DataRowView")
+            {
+                using (SqlConnection sqlc = new SqlConnection(SQLCommunication.cs))
+                {
+                    DataTable gridTable = new DataTable();
+                    dataAdapter2.SelectCommand = new SqlCommand($"SELECT * FROM {tableNameComboBox.Text}", sqlc);
+                    dataAdapter2.Fill(gridTable);
+                    bindingSourceGrid.DataSource = gridTable;
+                    dataGridView1.DataSource = bindingSourceGrid.DataSource;
+
+                    // resize the DataGridView to fit content
+                    dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                }
+            }
+        }
+
+        private void GetData()
         {
             using (SqlConnection sqlc = new SqlConnection(SQLCommunication.cs))
             {
@@ -43,17 +64,18 @@ namespace PDC_Lauren
                     sqlc.Open();
 
                     //You can specify the[0]Catalog, [1] Schema, [2] Table Name, [3]Table Type to get the specified table(s)
-                    String[] tableRestrictions = new string[4];
-                    tableRestrictions[0] = SQLCommunication.databaseName;
-                    //DataTable table = sqlc.GetSchema("Tables");
-                    DataTable table = new DataTable();
-                    dataAdapter.SelectCommand = new SqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES", sqlc);
-                    
-                    dataAdapter.Fill(table);
-                    bindingSource1.DataSource = table;
+                    //String[] tableRestrictions = new string[4];
+                    //tableRestrictions[0] = SQLCommunication.databaseName;
 
-                    // resize the DataGridView to fit content
-                    dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                    DataTable tablesTable = new DataTable();
+                    dataAdapter1.SelectCommand = new SqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES", sqlc);
+                    dataAdapter1.Fill(tablesTable);
+                    bindingSourceList.DataSource = tablesTable;
+                    tableNameComboBox.DataSource = bindingSourceList.DataSource;
+                    tableNameComboBox.DisplayMember = "TABLE_NAME";
+                    tableNameComboBox.ValueMember = "TABLE_NAME";
+
+                    //loadGrid(sqlc);
                 }
                 catch (SqlException sqlexception)
                 {
@@ -76,5 +98,19 @@ namespace PDC_Lauren
             //table.Locale = System.Globalization.CultureInfo.InvariantCulture;
             //dataAdapter.Fill(table);s
         }
+        
+        //private void loadGrid(SqlConnection sqlc)
+        //{
+        //    DataTable gridTable = new DataTable();
+        //    dataAdapter2.SelectCommand = new SqlCommand($"SELECT * FROM {tableNameComboBox.Text}", sqlc);
+        //    dataAdapter2.Fill(gridTable);
+        //    bindingSourceGrid.DataSource = gridTable;
+        //    dataGridView1.DataSource = bindingSourceGrid.DataSource;
+
+        //    // resize the DataGridView to fit content
+        //    dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+        //}
+
+        
     }
 }
