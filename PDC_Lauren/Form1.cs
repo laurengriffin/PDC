@@ -79,7 +79,6 @@ namespace PDC_Lauren
             // determine if reading or writing to plc
             if (!WriteCheckBox.Checked)
             {
-                // if reading from the plc
                 // print data according to data type
                 Console.WriteLine("reading from the plc");
                 for (int i = 0; i < tag.ElementCount; i++)
@@ -122,7 +121,7 @@ namespace PDC_Lauren
             }
             else if (WriteCheckBox.Checked)
             {
-                // if writing to plc
+                // writing to plc
                 Console.WriteLine("writing to PLC");
                 for (int i = 0; i < plcom.elemCount; i++)
                 {
@@ -194,6 +193,26 @@ namespace PDC_Lauren
             // close and cleanup resources
             client.Dispose();
             Console.Read();
+        }
+
+        private void sqlConnectButton_Click(object sender, EventArgs e)
+        {
+            SQLCommunication connection = new SQLCommunication(serverNameTextBox.Text, databaseNameTextBox.Text, userNameTextBox.Text, passwordTextBox.Text);
+            MessageBox.Show("connection string = " + SQLCommunication.cs);
+            using (SqlConnection sqlc = new SqlConnection(SQLCommunication.cs))
+            {
+                sqlc.Open();
+                MessageBox.Show("connection open");
+                Console.WriteLine("ServerVersion: {0}", sqlc.ServerVersion);
+                Console.WriteLine("State: {0}", sqlc.State);
+
+                // open form 2 to display list of tables in designated database
+                Form2 frm2 = new Form2();
+
+                frm2.Visible = true;
+
+                sqlc.Close();
+            }
         }
 
         // unused
@@ -269,113 +288,6 @@ namespace PDC_Lauren
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
 
-        }
-
-        private void sqlConnectButton_Click(object sender, EventArgs e)
-        {
-            // TODO: display data
-            SQLCommunication connection = new SQLCommunication(serverNameTextBox.Text, databaseNameTextBox.Text, userNameTextBox.Text, passwordTextBox.Text);
-            MessageBox.Show("connection string = " + SQLCommunication.cs);
-            using (SqlConnection sqlc = new SqlConnection(SQLCommunication.cs))
-            {
-                sqlc.Open();
-                MessageBox.Show("connection open");
-                Console.WriteLine("ServerVersion: {0}", sqlc.ServerVersion);
-                Console.WriteLine("State: {0}", sqlc.State);
-
-                // open form 2 to display list of tables in designated database
-                Form2 frm2 = new Form2();
-
-                //this.Visible = false;
-                frm2.Visible = true;
-                //this.Close();
-
-                // get the meta data for supported schema collections
-                //DataTable metaDataTable = sqlc.GetSchema("MetaDataCollections");
-                //Console.WriteLine("Meta Data for Supported Schema Collections:");
-                //ShowDataTable(metaDataTable, 25);
-                //Console.WriteLine();
-
-                // get the schema information of databases in your instance
-                //DataTable databasesSchemaTable = sqlc.GetSchema("Databases");
-                //Console.WriteLine("Schema Information of Databases:");
-                //ShowDataTable(databasesSchemaTable, 25);
-                //Console.WriteLine();
-
-                // You can specify the [0]Catalog, [1]Schema, [2]Table Name, [3]Table Type to get the specified table(s)
-                String[] tableRestrictions = new string[4];
-                //tableRestrictions[2] = "Ingredient";
-                tableRestrictions[0] = databaseNameTextBox.Text.Trim();
-                Console.WriteLine("Tables in the specified database: " + tableRestrictions[0]);
-
-                DataTable courseTableSchemaTable = sqlc.GetSchema("Tables", tableRestrictions);
-                Console.WriteLine("Schema Information of Tables: ");
-                
-                ShowDataTable(courseTableSchemaTable, 20);
-                Console.WriteLine();
-
-                //DataTable allColumnsSchemaTable = sqlc.GetSchema("Columns");
-                //Console.WriteLine("Schema Information of All Columns: ");
-                //ShowColumns(allColumnsSchemaTable);
-                //Console.WriteLine();
-
-                // You can specify the [0]Catalog, [1]Schema, [2]Table Name, [3]Column Name to get the specified column(s)
-                //String[] columnRestrictions = new string[4];
-                //columnRestrictions[2] = "Ingredient";
-                //columnRestrictions[3] = "IngrName";
-
-                //DataTable departmentIDSchemaTable = sqlc.GetSchema("Columns", columnRestrictions);
-                //ShowColumns(departmentIDSchemaTable);
-                //Console.WriteLine();
-
-                sqlc.Close();
-
-                Console.WriteLine("Connection Closed");
-            }
-
-        }
-
-        private static void ShowDataTable(DataTable table, Int32 length)
-        {
-            foreach (DataColumn col in table.Columns)
-            {
-                Console.Write("{0,-" + length + "}", col.ColumnName);
-            }
-            Console.WriteLine();
-
-            foreach (DataRow row in table.Rows)
-            {
-                foreach (DataColumn col in table.Columns)
-                {
-                    if (col.DataType.Equals(typeof(DateTime)))
-                        Console.Write("{0,-" + length + ":d}", row[col]);
-                    else if (col.DataType.Equals(typeof(Decimal)))
-                        Console.Write("{0,-" + length + ":C}", row[col]);
-                    else
-                        Console.Write("{0,-" + length + "}", row[col]);
-                }
-                Console.WriteLine();
-            }
-        }
-
-        private static void ShowColumns(DataTable columnsTable)
-        {
-            var selectedRows = from info in columnsTable.AsEnumerable()
-                               select new
-                               {
-                                   TableCatalog = info["TABLE_CATALOG"],
-                                   TableSchema = info["TABLE_SCHEMA"],
-                                   TableName = info["TABLE_NAME"],
-                                   ColumnName = info["COLUMN_NAME"],
-                                   DataType = info["DATA_TYPE"]
-                               };
-            Console.WriteLine("{0,-15}{1,-15}{2,-15}{3,-15}{4,-15}", "TableCatalog", "TABLE_SCHEMA",
-          "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE");
-            foreach (var row in selectedRows)
-            {
-                Console.WriteLine("{0,-15}{1,-15}{2,-15}{3,-15}{4,-15}", row.TableCatalog,
-                    row.TableSchema, row.TableName, row.ColumnName, row.DataType);
-            }
         }
     }
 }
