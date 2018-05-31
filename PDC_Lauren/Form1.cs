@@ -16,21 +16,23 @@ namespace PDC_Lauren
     public partial class Form1 : Form
     {
 
+        private BindingSource bindingSourceList = new BindingSource();
+        private SqlDataAdapter listAdapter = new SqlDataAdapter();
+
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // hide fields on form
             WriteValueTextBox.Visible = false;
             label9.Visible = false;
-        }
-
-        private void TableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
+            tableNameLabel.Visible = false;
+            tableNameComboBox.Visible = false;
+            sqlConnectButton.Visible = false;
+            resetButton.Visible = false;
         }
 
         private void connectButton_Click(object sender, EventArgs e)
@@ -195,27 +197,82 @@ namespace PDC_Lauren
             Console.Read();
         }
 
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            WriteValueTextBox.Visible = !WriteValueTextBox.Visible;
+            label9.Visible = !label9.Visible;
+        }
+
         private void sqlConnectButton_Click(object sender, EventArgs e)
         {
+            SQLCommunication.tableName = tableNameComboBox.Text;
+            Form2 form2 = new Form2();
+            form2.Visible = true;
+        }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            // connect to the sql client
             SQLCommunication connection = new SQLCommunication(serverNameTextBox.Text, databaseNameTextBox.Text, userNameTextBox.Text, passwordTextBox.Text);
-            MessageBox.Show("connection string = " + SQLCommunication.cs);
             using (SqlConnection sqlc = new SqlConnection(SQLCommunication.cs))
             {
-                sqlc.Open();
-                MessageBox.Show("connection open");
-                Console.WriteLine("ServerVersion: {0}", sqlc.ServerVersion);
-                Console.WriteLine("State: {0}", sqlc.State);
+                try
+                {
+                    // open sql connection
+                    sqlc.Open();
+                    MessageBox.Show("connection open");
+                    Console.WriteLine("ServerVersion: {0}", sqlc.ServerVersion);
+                    Console.WriteLine("State: {0}", sqlc.State);
 
-                // open form 2 to display list of tables in designated database
-                Form2 frm2 = new Form2();
+                    // set up the combo box to list the tables in the database
+                    DataTable tablesList = new DataTable();
+                    listAdapter.SelectCommand = new SqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES", sqlc);
+                    listAdapter.Fill(tablesList);
+                    bindingSourceList.DataSource = tablesList;
+                    tableNameComboBox.DataSource = bindingSourceList.DataSource;
+                    tableNameComboBox.DisplayMember = "TABLE_NAME";
+                    tableNameComboBox.ValueMember = "TABLE_NAME";
 
-                frm2.Visible = true;
+                    // hide and show respective fields on form
+                    tableNameLabel.Visible = true;
+                    tableNameComboBox.Visible = true;
+                    sqlConnectButton.Visible = true;
+                    loadButton.Visible = false;
+                    resetButton.Visible = true;
 
-                sqlc.Close();
+                    sqlc.Close();
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show("Error: \n" + err);
+                }
             }
         }
 
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            WriteValueTextBox.Visible = false;
+            label9.Visible = false;
+            loadButton.Visible = true;
+            tableNameLabel.Visible = false;
+            tableNameComboBox.Visible = false;
+            sqlConnectButton.Visible = false;
+            resetButton.Visible = false;
+        }
+
         // unused
+        private void tableNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+          
+        }
+        private void TableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
 
@@ -232,12 +289,6 @@ namespace PDC_Lauren
         private void tabPage1_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            WriteValueTextBox.Visible = !WriteValueTextBox.Visible;
-            label9.Visible = !label9.Visible;
         }
 
         private void DataTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
