@@ -16,6 +16,7 @@ namespace PDC_Lauren
         
         private BindingSource bindingSourceGrid = new BindingSource();
         private SqlDataAdapter gridAdapter = new SqlDataAdapter();
+        DataTable gridTable = new DataTable();
 
         public Form2()
         {
@@ -26,7 +27,6 @@ namespace PDC_Lauren
         {
             using (SqlConnection sqlc = new SqlConnection(SQLCommunication.cs))
             {
-                DataTable gridTable = new DataTable();
                 //string tName = SQLCommunication.tableName;
                 MessageBox.Show($"Table name is {SQLCommunication.tableName}");
                 gridAdapter.SelectCommand = new SqlCommand($"SELECT * FROM {SQLCommunication.tableName}", sqlc);
@@ -36,6 +36,32 @@ namespace PDC_Lauren
 
                 // resize the DataGridView to fit content
                 dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            }
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {       
+            try
+            {
+                using (SqlConnection sqlc = new SqlConnection(SQLCommunication.cs))
+                {
+                    sqlc.Open();
+                    // create the update command
+                    SqlCommand updateCommand = new SqlCommand($"UPDATE {SQLCommunication.tableName} SET inventory=@Inventory where ingrCode=@IngrCode", sqlc);
+                    updateCommand.Parameters.AddWithValue("@Inventory", 3);
+                    updateCommand.Parameters.AddWithValue("@IngrCode", "RIC 30");
+                    int rowsAffected = updateCommand.ExecuteNonQuery();
+                    if (rowsAffected == 1)
+                    {
+                        MessageBox.Show("Information Updated", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    sqlc.Close();
+                    //gridAdapter.UpdateCommand = updateCommand;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
