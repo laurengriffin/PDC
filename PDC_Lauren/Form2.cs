@@ -18,6 +18,7 @@ namespace PDC_Lauren
         private BindingSource bindingSourceGrid = new BindingSource();
         private SqlDataAdapter gridAdapter = new SqlDataAdapter();
         DataTable gridTable = new DataTable();
+        string[] keys;
 
         public Form2()
         {
@@ -28,6 +29,8 @@ namespace PDC_Lauren
         {
             using (SqlConnection sqlc = new SqlConnection(SQLCommunication.cs))
             {
+                sqlc.Open();
+
                 //string tName = SQLCommunication.tableName;
                 MessageBox.Show($"Table name is {SQLCommunication.tableName}");
                 gridAdapter.SelectCommand = new SqlCommand($"SELECT * FROM {SQLCommunication.tableName}", sqlc);
@@ -37,6 +40,40 @@ namespace PDC_Lauren
 
                 // resize the DataGridView to fit content
                 dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+
+                // get keys
+                SqlCommand objCmd = new SqlCommand();
+                string keyQuery = "SELECT c.Name AS 'Column_Name' " +
+                                    "FROM sys.indexes i " +
+                                    "INNER JOIN sys.index_columns ic ON i.object_id = ic.object_id AND i.index_id = ic.index_id " +
+                                    "INNER JOIN sys.columns c ON ic.object_id = c.object_id AND ic.column_id = c.column_id " +
+                                    "INNER JOIN sys.objects o ON i.object_id = o.object_id " +
+                                    "WHERE i.is_primary_key = 1 " +
+                                    $"AND o.name = '{SQLCommunication.tableName}'";
+                objCmd.CommandText = keyQuery;
+                objCmd.CommandType = CommandType.Text;
+                objCmd.Connection = sqlc;
+                SqlDataReader reader = objCmd.ExecuteReader();
+                // create string of keys
+                int numKeys = 0;
+                String keyString = "";
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        keyString += reader.GetString(0) + ";";
+                        numKeys++;
+                    }
+                }
+                reader.Close();
+                // string of keys
+                keys = Regex.Split(keyString, ";");
+                for (int i = 0; i < keys.Length - 1; i++)
+                {
+                    Console.WriteLine($"keys[{i}]: {keys[i]}");
+                    dataGridView1.Columns[$"{keys[i]}"].ReadOnly = true;
+                }
+                
             }
         }
 
@@ -50,39 +87,6 @@ namespace PDC_Lauren
                     sqlc.Open();
 
                     SqlCommand objCmd = new SqlCommand();
-
-                    // find primary keys
-                    string keyQuery = "SELECT c.Name AS 'Column_Name' " +
-                                        "FROM sys.indexes i " +
-                                        "INNER JOIN sys.index_columns ic ON i.object_id = ic.object_id AND i.index_id = ic.index_id " +
-                                        "INNER JOIN sys.columns c ON ic.object_id = c.object_id AND ic.column_id = c.column_id " +
-                                        "INNER JOIN sys.objects o ON i.object_id = o.object_id " +
-                                        "WHERE i.is_primary_key = 1 " +
-                                        $"AND o.name = '{SQLCommunication.tableName}'";
-                    objCmd.CommandText = keyQuery;
-                    objCmd.CommandType = CommandType.Text;
-                    objCmd.Connection = sqlc;
-
-                    SqlDataReader reader = objCmd.ExecuteReader();
-
-                    // create string of keys
-                    int numKeys = 0;
-                    String keyString = "";
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            Console.WriteLine($"{reader.GetString(0)}");
-                            keyString += reader.GetString(0) + ";";
-                            numKeys++;
-                        }
-                    }
-                    // string of keys
-                    string[] keys = Regex.Split(keyString, ";");
-                    for (int i = 0; i < keys.Length-1; i++)
-                    {
-                        Console.WriteLine($"keys[{i}]: {keys[i]}");
-                    }
 
                     // initialize query string and sqlcommand object
                     string strQuery = string.Empty;
@@ -124,13 +128,13 @@ namespace PDC_Lauren
                                     strQuery += " AND ";
                                 }
                             }
-                            //strQuery += $"WHERE {gridTable.Columns[0]} = '" + gridTable.Rows[i][$"{gridTable.Columns[0]}"].ToString() + "'";
                         }
 
-                        reader.Close();
+                        
 
                         Console.WriteLine($"Query String:\n{strQuery}");
                         objCmd.CommandText = strQuery;
+                        objCmd.Connection = sqlc;
                         objCmd.ExecuteNonQuery();
                         MessageBox.Show("Information Updated", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
