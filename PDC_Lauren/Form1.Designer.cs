@@ -319,7 +319,7 @@
             this.resetButton.Location = new System.Drawing.Point(618, 358);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(135, 23);
-            this.resetButton.TabIndex = 14;
+            this.resetButton.TabIndex = 12;
             this.resetButton.Text = "Reset";
             this.resetButton.UseVisualStyleBackColor = true;
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
@@ -329,7 +329,7 @@
             this.loadButton.Location = new System.Drawing.Point(618, 300);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(135, 23);
-            this.loadButton.TabIndex = 13;
+            this.loadButton.TabIndex = 9;
             this.loadButton.Text = "Load";
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
@@ -340,7 +340,7 @@
             this.tableNameComboBox.Location = new System.Drawing.Point(297, 262);
             this.tableNameComboBox.Name = "tableNameComboBox";
             this.tableNameComboBox.Size = new System.Drawing.Size(288, 21);
-            this.tableNameComboBox.TabIndex = 12;
+            this.tableNameComboBox.TabIndex = 10;
             this.tableNameComboBox.SelectedIndexChanged += new System.EventHandler(this.tableNameComboBox_SelectedIndexChanged);
             // 
             // tableNameLabel
@@ -357,7 +357,7 @@
             this.sqlConnectButton.Location = new System.Drawing.Point(618, 329);
             this.sqlConnectButton.Name = "sqlConnectButton";
             this.sqlConnectButton.Size = new System.Drawing.Size(135, 23);
-            this.sqlConnectButton.TabIndex = 10;
+            this.sqlConnectButton.TabIndex = 11;
             this.sqlConnectButton.Text = "View";
             this.sqlConnectButton.UseVisualStyleBackColor = true;
             this.sqlConnectButton.Click += new System.EventHandler(this.sqlConnectButton_Click);
@@ -366,8 +366,10 @@
             // 
             this.passwordTextBox.Location = new System.Drawing.Point(297, 232);
             this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.PasswordChar = '•';
             this.passwordTextBox.Size = new System.Drawing.Size(288, 20);
             this.passwordTextBox.TabIndex = 8;
+            this.passwordTextBox.UseSystemPasswordChar = true;
             this.passwordTextBox.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // userNameTextBox
