@@ -31,8 +31,6 @@ namespace PDC_Lauren
             {
                 sqlc.Open();
 
-                //string tName = SQLCommunication.tableName;
-                MessageBox.Show($"Table name is {SQLCommunication.tableName}");
                 gridAdapter.SelectCommand = new SqlCommand($"SELECT * FROM {SQLCommunication.tableName}", sqlc);
                 gridAdapter.Fill(gridTable);
                 bindingSourceGrid.DataSource = gridTable;
@@ -70,7 +68,6 @@ namespace PDC_Lauren
                 keys = Regex.Split(keyString, ";");
                 for (int i = 0; i < keys.Length - 1; i++)
                 {
-                    Console.WriteLine($"keys[{i}]: {keys[i]}");
                     dataGridView1.Columns[$"{keys[i]}"].ReadOnly = true;
                 }
                 
@@ -101,12 +98,10 @@ namespace PDC_Lauren
                             strQuery = $"UPDATE {SQLCommunication.tableName} SET ";
 
                             // loop through the columns
-                            Console.WriteLine($"number of colums: {dtChanges.Columns.Count}");
                             for (int j = 0; j < dtChanges.Columns.Count; j++)
                             {
 
                                 int index = Array.IndexOf(keys, $"{dtChanges.Columns[j]}");
-                                Console.WriteLine($"index of {dtChanges.Columns[j]}: {index}");
                                 if (index < 0)
                                 {
                                     if (j != dtChanges.Columns.Count - 1)
@@ -122,17 +117,15 @@ namespace PDC_Lauren
                             strQuery += $"WHERE ";
                             for (int k = 0; k < keys.Length-1; k++)
                             {
-                                strQuery += $"{gridTable.Columns[keys[k]]} = '" + gridTable.Rows[i][$"{gridTable.Columns[keys[k]]}"].ToString() + "'";
+                                strQuery += $"{dtChanges.Columns[keys[k]]} = '" + dtChanges.Rows[i][$"{dtChanges.Columns[keys[k]]}"].ToString() + "'";
                                 if (k != keys.Length-2)
                                 {
                                     strQuery += " AND ";
                                 }
                             }
+                            Console.WriteLine($"Query String:\t{strQuery}");
                         }
 
-                        
-
-                        Console.WriteLine($"Query String:\n{strQuery}");
                         objCmd.CommandText = strQuery;
                         objCmd.Connection = sqlc;
                         objCmd.ExecuteNonQuery();

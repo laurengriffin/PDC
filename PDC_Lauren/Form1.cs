@@ -66,7 +66,7 @@ namespace PDC_Lauren
             }
             if (client.GetStatus(tag) != Libplctag.PLCTAG_STATUS_OK)
             {
-                Console.WriteLine($"Error setting up tag internal state. Error {client.DecodeError(client.GetStatus(tag))}\n");
+                MessageBox.Show($"ERROR: Unable to set up tag internal state.\n {client.DecodeError(client.GetStatus(tag))}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -74,7 +74,7 @@ namespace PDC_Lauren
             var rc = client.ReadTag(tag, 5000);
             if (rc != Libplctag.PLCTAG_STATUS_OK)
             {
-                Console.WriteLine($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n");
+                MessageBox.Show($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -82,41 +82,29 @@ namespace PDC_Lauren
             if (!WriteCheckBox.Checked)
             {
                 // print data according to data type
-                Console.WriteLine("reading from the plc");
                 for (int i = 0; i < tag.ElementCount; i++)
                 {
                     switch (plcom.dtString)
                     {
                         case "Int16":
-                            Console.WriteLine("data type identified as int16");
-                            Console.WriteLine($"data[{i}]={client.GetInt16Value(tag, (i * tag.ElementSize))}\n");
-                            MessageBox.Show($"{plcom.tagname}={client.GetInt16Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{plcom.tagname}={client.GetInt16Value(tag, (i * tag.ElementSize))}\n", "Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
                         case "Int8":
-                            Console.WriteLine("data type identified as int8");
-                            Console.WriteLine($"data[{i}]={client.GetInt8Value(tag, (i * tag.ElementSize))}\n");
-                            MessageBox.Show($"{plcom.tagname}={client.GetInt8Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{plcom.tagname}={client.GetInt8Value(tag, (i * tag.ElementSize))}\n", "Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
                         case "Int32":
-                            Console.WriteLine("data type identified as int32");
-                            Console.WriteLine($"data[{i}]={client.GetInt32Value(tag, (i * tag.ElementSize))}\n");
-                            MessageBox.Show($"{plcom.tagname}={client.GetInt32Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{plcom.tagname}={client.GetInt32Value(tag, (i * tag.ElementSize))}\n", "Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
                         case "Float32":
-                            Console.WriteLine("data type identified as float32");
-                            Console.WriteLine($"data[{i}]={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
-                            MessageBox.Show($"{plcom.tagname}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"{plcom.tagname}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n", "Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
                         // haven't tested the string data type
                         //case "String":
-                            //Console.WriteLine("data type identified as string");
-                            // not tested bc unable to find a string data type value on plc
-                            //Console.WriteLine($"data[{i}]={client.ReadTag(tag, (i * tag.ElementSize))}\n");
-                            //MessageBox.Show($"{plcom.tagname}={client.ReadTag(tag, (i * tag.ElementSize))}\n");
-                            //break;
+                        // not tested bc unable to find a string data type value on plc
+                        //MessageBox.Show($"{plcom.tagname}={client.ReadTag(tag, (i * tag.ElementSize))}\n", "Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //break;
                         default:
-                            Console.WriteLine("no data type identified");
-                            MessageBox.Show("no data type identified");
+                            MessageBox.Show("ERROR: No data type identified.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             break;
                     }
                 }
@@ -124,29 +112,24 @@ namespace PDC_Lauren
             else if (WriteCheckBox.Checked)
             {
                 // writing to plc
-                Console.WriteLine("writing to PLC");
                 for (int i = 0; i < plcom.elemCount; i++)
                 {
                     switch (plcom.dtString)
                     {
                         case "Int16":
                             Int16 val0 = Convert.ToInt16(plcom.valToWrite);
-                            Console.WriteLine($"Setting element {plcom.tagname} to {val0}\n");
                             client.SetInt16Value(tag, (i * tag.ElementSize), val0);
                             break;
                         case "Int8":
                             sbyte val1 = sbyte.Parse(plcom.valToWrite);
-                            Console.WriteLine($"Setting element {plcom.tagname} to {val1}\n");
                             client.SetInt8Value(tag, (i * tag.ElementSize), val1);
                             break;
                         case "Int32":
                             Int32 val2 = Convert.ToInt32(plcom.valToWrite);
-                            Console.WriteLine($"Setting element {plcom.tagname} to {val2}\n");
                             client.SetInt32Value(tag, (i * tag.ElementSize), val2);
                             break;
                         case "Float32":
                             float val3 = float.Parse(plcom.valToWrite);
-                            Console.WriteLine($"Setting element {plcom.tagname} to {val3}\n");
                             client.SetFloat32Value(tag, (i * tag.ElementSize), val3);
                             break;
                         default:
@@ -158,7 +141,7 @@ namespace PDC_Lauren
 
                 if (rc != Libplctag.PLCTAG_STATUS_OK)
                 {
-                    Console.WriteLine($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(rc)}\n");
+                    MessageBox.Show($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(rc)}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -168,16 +151,16 @@ namespace PDC_Lauren
                     switch (plcom.dtString)
                     {
                         case "Int16":
-                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt16Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt16Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
                         case "Int8":
-                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt8Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt8Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
                         case "Int32":
-                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt32Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt32Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
                         case "Float32":
-                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n");
+                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
                         default:
                             break;
@@ -188,8 +171,7 @@ namespace PDC_Lauren
             else
             {
                 // not sure if should read or write to plc
-                Console.WriteLine("'Write to PLC' checkbox value is unknown. unable to perform any operation.");
-                Console.WriteLine("checked? " + WriteCheckBox.Checked);
+                MessageBox.Show("'Write to PLC' checkbox value is unknown. Unable to perform any operation.'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             // close and cleanup resources
@@ -220,9 +202,7 @@ namespace PDC_Lauren
                 {
                     // open sql connection
                     sqlc.Open();
-                    MessageBox.Show("connection open");
-                    Console.WriteLine("ServerVersion: {0}", sqlc.ServerVersion);
-                    Console.WriteLine("State: {0}", sqlc.State);
+                    MessageBox.Show("Connection Open", "Connected", MessageBoxButtons.OK, MessageBoxIcon.None);
 
                     // set up the combo box to list the tables in the database
                     DataTable tablesList = new DataTable();
@@ -244,7 +224,7 @@ namespace PDC_Lauren
                 }
                 catch (Exception err)
                 {
-                    MessageBox.Show("Error: \n" + err);
+                    MessageBox.Show("ERROR: \n" + err, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

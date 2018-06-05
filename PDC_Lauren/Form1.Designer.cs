@@ -121,7 +121,7 @@
             this.DataTypeComboBox.Location = new System.Drawing.Point(266, 233);
             this.DataTypeComboBox.Name = "DataTypeComboBox";
             this.DataTypeComboBox.Size = new System.Drawing.Size(358, 21);
-            this.DataTypeComboBox.TabIndex = 18;
+            this.DataTypeComboBox.TabIndex = 5;
             this.DataTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.DataTypeComboBox_SelectedIndexChanged);
             // 
             // CpuTypeComboBox
@@ -134,7 +134,7 @@
             this.CpuTypeComboBox.Location = new System.Drawing.Point(266, 168);
             this.CpuTypeComboBox.Name = "CpuTypeComboBox";
             this.CpuTypeComboBox.Size = new System.Drawing.Size(358, 21);
-            this.CpuTypeComboBox.TabIndex = 17;
+            this.CpuTypeComboBox.TabIndex = 3;
             // 
             // PathComboBox
             // 
@@ -146,14 +146,14 @@
             this.PathComboBox.Location = new System.Drawing.Point(266, 103);
             this.PathComboBox.Name = "PathComboBox";
             this.PathComboBox.Size = new System.Drawing.Size(358, 21);
-            this.PathComboBox.TabIndex = 16;
+            this.PathComboBox.TabIndex = 1;
             // 
             // WriteValueTextBox
             // 
             this.WriteValueTextBox.Location = new System.Drawing.Point(266, 325);
             this.WriteValueTextBox.Name = "WriteValueTextBox";
             this.WriteValueTextBox.Size = new System.Drawing.Size(359, 20);
-            this.WriteValueTextBox.TabIndex = 15;
+            this.WriteValueTextBox.TabIndex = 8;
             this.WriteValueTextBox.TextChanged += new System.EventHandler(this.WriteValueTextBox_TextChanged);
             // 
             // ElementCountTextBox
@@ -161,28 +161,28 @@
             this.ElementCountTextBox.Location = new System.Drawing.Point(266, 266);
             this.ElementCountTextBox.Name = "ElementCountTextBox";
             this.ElementCountTextBox.Size = new System.Drawing.Size(359, 20);
-            this.ElementCountTextBox.TabIndex = 14;
+            this.ElementCountTextBox.TabIndex = 6;
             // 
             // TagNameTextBox
             // 
             this.TagNameTextBox.Location = new System.Drawing.Point(266, 201);
             this.TagNameTextBox.Name = "TagNameTextBox";
             this.TagNameTextBox.Size = new System.Drawing.Size(359, 20);
-            this.TagNameTextBox.TabIndex = 13;
+            this.TagNameTextBox.TabIndex = 4;
             // 
             // SlotTextBox
             // 
             this.SlotTextBox.Location = new System.Drawing.Point(266, 136);
             this.SlotTextBox.Name = "SlotTextBox";
             this.SlotTextBox.Size = new System.Drawing.Size(359, 20);
-            this.SlotTextBox.TabIndex = 12;
+            this.SlotTextBox.TabIndex = 2;
             // 
             // IPAddTextBox
             // 
             this.IPAddTextBox.Location = new System.Drawing.Point(266, 71);
             this.IPAddTextBox.Name = "IPAddTextBox";
             this.IPAddTextBox.Size = new System.Drawing.Size(359, 20);
-            this.IPAddTextBox.TabIndex = 11;
+            this.IPAddTextBox.TabIndex = 0;
             // 
             // connectButton
             // 
@@ -190,7 +190,7 @@
             this.connectButton.Location = new System.Drawing.Point(644, 350);
             this.connectButton.Name = "connectButton";
             this.connectButton.Size = new System.Drawing.Size(120, 35);
-            this.connectButton.TabIndex = 10;
+            this.connectButton.TabIndex = 9;
             this.connectButton.Text = "Connect";
             this.connectButton.UseVisualStyleBackColor = true;
             this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
@@ -210,7 +210,7 @@
             this.WriteCheckBox.Location = new System.Drawing.Point(158, 312);
             this.WriteCheckBox.Name = "WriteCheckBox";
             this.WriteCheckBox.Size = new System.Drawing.Size(86, 17);
-            this.WriteCheckBox.TabIndex = 8;
+            this.WriteCheckBox.TabIndex = 7;
             this.WriteCheckBox.Text = "Write to PLC";
             this.WriteCheckBox.UseVisualStyleBackColor = true;
             this.WriteCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
