@@ -70,6 +70,13 @@ namespace PDC_Lauren
                 {
                     dataGridView1.Columns[$"{keys[i]}"].ReadOnly = true;
                 }
+
+                // format header row text
+                //foreach (DataGridViewColumn col in dataGridView1.Columns)
+                //{
+                //    col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                //    col.HeaderCell.Style.Font = new Font()
+                //}
                 
             }
         }
@@ -124,11 +131,11 @@ namespace PDC_Lauren
                                 }
                             }
                             Console.WriteLine($"Query String:\t{strQuery}");
+                            objCmd.CommandText = strQuery;
+                            objCmd.Connection = sqlc;
+                            objCmd.ExecuteNonQuery();
                         }
-
-                        objCmd.CommandText = strQuery;
-                        objCmd.Connection = sqlc;
-                        objCmd.ExecuteNonQuery();
+                        
                         MessageBox.Show("Information Updated", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     sqlc.Close();
