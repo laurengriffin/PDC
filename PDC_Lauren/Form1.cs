@@ -112,61 +112,70 @@ namespace PDC_Lauren
             else if (WriteCheckBox.Checked)
             {
                 // writing to plc
-                for (int i = 0; i < plcom.elemCount; i++)
+                //if (plcom.valToWrite.ToString() != "")
+                try
                 {
-                    switch (plcom.dtString)
+                    for (int i = 0; i < plcom.elemCount; i++)
                     {
-                        case "Int16":
-                            Int16 val0 = Convert.ToInt16(plcom.valToWrite);
-                            client.SetInt16Value(tag, (i * tag.ElementSize), val0);
-                            break;
-                        case "Int8":
-                            sbyte val1 = sbyte.Parse(plcom.valToWrite);
-                            client.SetInt8Value(tag, (i * tag.ElementSize), val1);
-                            break;
-                        case "Int32":
-                            Int32 val2 = Convert.ToInt32(plcom.valToWrite);
-                            client.SetInt32Value(tag, (i * tag.ElementSize), val2);
-                            break;
-                        case "Float32":
-                            float val3 = float.Parse(plcom.valToWrite);
-                            client.SetFloat32Value(tag, (i * tag.ElementSize), val3);
-                            break;
-                        default:
-                            break;
+                        switch (plcom.dtString)
+                        {
+                            case "Int16":
+                                Int16 val0 = Convert.ToInt16(plcom.valToWrite);
+                                client.SetInt16Value(tag, (i * tag.ElementSize), val0);
+                                break;
+                            case "Int8":
+                                sbyte val1 = sbyte.Parse(plcom.valToWrite);
+                                client.SetInt8Value(tag, (i * tag.ElementSize), val1);
+                                break;
+                            case "Int32":
+                                Int32 val2 = Convert.ToInt32(plcom.valToWrite);
+                                client.SetInt32Value(tag, (i * tag.ElementSize), val2);
+                                break;
+                            case "Float32":
+                                float val3 = float.Parse(plcom.valToWrite);
+                                client.SetFloat32Value(tag, (i * tag.ElementSize), val3);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    rc = client.WriteTag(tag, 5000);
+
+                    if (rc != Libplctag.PLCTAG_STATUS_OK)
+                    {
+                        MessageBox.Show($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(rc)}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // print the new value that was written to the tag
+                    for (int i = 0; i < tag.ElementCount; i++)
+                    {
+                        switch (plcom.dtString)
+                        {
+                            case "Int16":
+                                MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt16Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                break;
+                            case "Int8":
+                                MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt8Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                break;
+                            case "Int32":
+                                MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt32Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                break;
+                            case "Float32":
+                                MessageBox.Show($"data changed\n{plcom.tagname}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                break;
+                            default:
+                                break;
+                        }
+
                     }
                 }
-
-                rc = client.WriteTag(tag, 5000);
-
-                if (rc != Libplctag.PLCTAG_STATUS_OK)
+                catch
                 {
-                    MessageBox.Show($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(rc)}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    MessageBox.Show("ERROR: Value to Write is not valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-                // print the new value that was written to the tag
-                for (int i = 0; i < tag.ElementCount; i++)
-                {
-                    switch (plcom.dtString)
-                    {
-                        case "Int16":
-                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt16Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            break;
-                        case "Int8":
-                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt8Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            break;
-                        case "Int32":
-                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetInt32Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            break;
-                        case "Float32":
-                            MessageBox.Show($"data changed\n{plcom.tagname}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            break;
-                        default:
-                            break;
-                    }
-                    
-                }
+  
             }
             else
             {

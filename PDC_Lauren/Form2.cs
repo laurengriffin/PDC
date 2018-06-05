@@ -70,13 +70,6 @@ namespace PDC_Lauren
                 {
                     dataGridView1.Columns[$"{keys[i]}"].ReadOnly = true;
                 }
-
-                // format header row text
-                //foreach (DataGridViewColumn col in dataGridView1.Columns)
-                //{
-                //    col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                //    col.HeaderCell.Style.Font = new Font()
-                //}
                 
             }
         }
