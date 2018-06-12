@@ -38,8 +38,6 @@ namespace PDC_Lauren
                     this.path = path + "," + slot;
                 }
             }
-            //this.path = path + "," + slot;
-            //Console.WriteLine("path: " + this.path);
             // cpu type format
             if (cput.Equals("LGX"))
             {
@@ -54,7 +52,6 @@ namespace PDC_Lauren
                 this.cput = CpuType.PLC5;
             }
             this.tagname = tagname;
-            this.dtString = dtString;
             // data type format
             this.dtString = dtString;
             if (this.dtString == "Int16")

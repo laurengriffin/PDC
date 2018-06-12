@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.DataTypeComboBox = new System.Windows.Forms.ComboBox();
             this.CpuTypeComboBox = new System.Windows.Forms.ComboBox();
             this.PathComboBox = new System.Windows.Forms.ComboBox();
@@ -39,34 +41,38 @@
             this.SlotTextBox = new System.Windows.Forms.TextBox();
             this.IPAddTextBox = new System.Windows.Forms.TextBox();
             this.connectButton = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.WriteCheckBox = new System.Windows.Forms.CheckBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.valToWriteLabel = new System.Windows.Forms.Label();
+            this.writeCheckBox = new System.Windows.Forms.CheckBox();
+            this.dataTypeLabel = new System.Windows.Forms.Label();
+            this.cpuTypeLabel = new System.Windows.Forms.Label();
+            this.slotLabel = new System.Windows.Forms.Label();
+            this.pathLabel = new System.Windows.Forms.Label();
+            this.elemCountLabel = new System.Windows.Forms.Label();
+            this.tagNameLabel = new System.Windows.Forms.Label();
+            this.ipAddLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.statusStrip2 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.resetButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
             this.tableNameComboBox = new System.Windows.Forms.ComboBox();
             this.tableNameLabel = new System.Windows.Forms.Label();
-            this.sqlConnectButton = new System.Windows.Forms.Button();
+            this.viewButton = new System.Windows.Forms.Button();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.userNameTextBox = new System.Windows.Forms.TextBox();
             this.databaseNameTextBox = new System.Windows.Forms.TextBox();
             this.serverNameTextBox = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.passwordLabel = new System.Windows.Forms.Label();
+            this.userNameLabel = new System.Windows.Forms.Label();
+            this.databaseNameLabel = new System.Windows.Forms.Label();
+            this.serverNameLabel = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.statusStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -82,6 +88,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.statusStrip1);
             this.tabPage1.Controls.Add(this.DataTypeComboBox);
             this.tabPage1.Controls.Add(this.CpuTypeComboBox);
             this.tabPage1.Controls.Add(this.PathComboBox);
@@ -91,15 +98,15 @@
             this.tabPage1.Controls.Add(this.SlotTextBox);
             this.tabPage1.Controls.Add(this.IPAddTextBox);
             this.tabPage1.Controls.Add(this.connectButton);
-            this.tabPage1.Controls.Add(this.label9);
-            this.tabPage1.Controls.Add(this.WriteCheckBox);
-            this.tabPage1.Controls.Add(this.label8);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.valToWriteLabel);
+            this.tabPage1.Controls.Add(this.writeCheckBox);
+            this.tabPage1.Controls.Add(this.dataTypeLabel);
+            this.tabPage1.Controls.Add(this.cpuTypeLabel);
+            this.tabPage1.Controls.Add(this.slotLabel);
+            this.tabPage1.Controls.Add(this.pathLabel);
+            this.tabPage1.Controls.Add(this.elemCountLabel);
+            this.tabPage1.Controls.Add(this.tagNameLabel);
+            this.tabPage1.Controls.Add(this.ipAddLabel);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -110,14 +117,31 @@
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(3, 399);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(786, 22);
+            this.statusStrip1.TabIndex = 10;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
             // DataTypeComboBox
             // 
             this.DataTypeComboBox.FormattingEnabled = true;
             this.DataTypeComboBox.Items.AddRange(new object[] {
-            "Int16",
             "Int8",
+            "Int16",
             "Int32",
-            "Float32"});
+            "Float32",
+            "String"});
             this.DataTypeComboBox.Location = new System.Drawing.Point(266, 233);
             this.DataTypeComboBox.Name = "DataTypeComboBox";
             this.DataTypeComboBox.Size = new System.Drawing.Size(358, 21);
@@ -195,88 +219,88 @@
             this.connectButton.UseVisualStyleBackColor = true;
             this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
-            // label9
+            // valToWriteLabel
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(170, 332);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(74, 13);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Value to Write";
+            this.valToWriteLabel.AutoSize = true;
+            this.valToWriteLabel.Location = new System.Drawing.Point(170, 332);
+            this.valToWriteLabel.Name = "valToWriteLabel";
+            this.valToWriteLabel.Size = new System.Drawing.Size(74, 13);
+            this.valToWriteLabel.TabIndex = 9;
+            this.valToWriteLabel.Text = "Value to Write";
             // 
-            // WriteCheckBox
+            // writeCheckBox
             // 
-            this.WriteCheckBox.AutoSize = true;
-            this.WriteCheckBox.Location = new System.Drawing.Point(158, 312);
-            this.WriteCheckBox.Name = "WriteCheckBox";
-            this.WriteCheckBox.Size = new System.Drawing.Size(86, 17);
-            this.WriteCheckBox.TabIndex = 7;
-            this.WriteCheckBox.Text = "Write to PLC";
-            this.WriteCheckBox.UseVisualStyleBackColor = true;
-            this.WriteCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.writeCheckBox.AutoSize = true;
+            this.writeCheckBox.Location = new System.Drawing.Point(158, 312);
+            this.writeCheckBox.Name = "writeCheckBox";
+            this.writeCheckBox.Size = new System.Drawing.Size(86, 17);
+            this.writeCheckBox.TabIndex = 7;
+            this.writeCheckBox.Text = "Write to PLC";
+            this.writeCheckBox.UseVisualStyleBackColor = true;
+            this.writeCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // label8
+            // dataTypeLabel
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(187, 241);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(57, 13);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "Data Type";
+            this.dataTypeLabel.AutoSize = true;
+            this.dataTypeLabel.Location = new System.Drawing.Point(187, 241);
+            this.dataTypeLabel.Name = "dataTypeLabel";
+            this.dataTypeLabel.Size = new System.Drawing.Size(57, 13);
+            this.dataTypeLabel.TabIndex = 7;
+            this.dataTypeLabel.Text = "Data Type";
             // 
-            // label7
+            // cpuTypeLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(191, 176);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 13);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "Cpu Type";
+            this.cpuTypeLabel.AutoSize = true;
+            this.cpuTypeLabel.Location = new System.Drawing.Point(191, 176);
+            this.cpuTypeLabel.Name = "cpuTypeLabel";
+            this.cpuTypeLabel.Size = new System.Drawing.Size(53, 13);
+            this.cpuTypeLabel.TabIndex = 6;
+            this.cpuTypeLabel.Text = "Cpu Type";
             // 
-            // label6
+            // slotLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(219, 143);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(25, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Slot";
+            this.slotLabel.AutoSize = true;
+            this.slotLabel.Location = new System.Drawing.Point(219, 143);
+            this.slotLabel.Name = "slotLabel";
+            this.slotLabel.Size = new System.Drawing.Size(25, 13);
+            this.slotLabel.TabIndex = 5;
+            this.slotLabel.Text = "Slot";
             // 
-            // label5
+            // pathLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(215, 111);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Path";
+            this.pathLabel.AutoSize = true;
+            this.pathLabel.Location = new System.Drawing.Point(215, 111);
+            this.pathLabel.Name = "pathLabel";
+            this.pathLabel.Size = new System.Drawing.Size(29, 13);
+            this.pathLabel.TabIndex = 4;
+            this.pathLabel.Text = "Path";
             // 
-            // label4
+            // elemCountLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(168, 273);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(76, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Element Count";
+            this.elemCountLabel.AutoSize = true;
+            this.elemCountLabel.Location = new System.Drawing.Point(168, 273);
+            this.elemCountLabel.Name = "elemCountLabel";
+            this.elemCountLabel.Size = new System.Drawing.Size(76, 13);
+            this.elemCountLabel.TabIndex = 3;
+            this.elemCountLabel.Text = "Element Count";
             // 
-            // label3
+            // tagNameLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(187, 208);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Tag Name";
+            this.tagNameLabel.AutoSize = true;
+            this.tagNameLabel.Location = new System.Drawing.Point(187, 208);
+            this.tagNameLabel.Name = "tagNameLabel";
+            this.tagNameLabel.Size = new System.Drawing.Size(57, 13);
+            this.tagNameLabel.TabIndex = 2;
+            this.tagNameLabel.Text = "Tag Name";
             // 
-            // label2
+            // ipAddLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(186, 78);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "IP Address";
+            this.ipAddLabel.AutoSize = true;
+            this.ipAddLabel.Location = new System.Drawing.Point(186, 78);
+            this.ipAddLabel.Name = "ipAddLabel";
+            this.ipAddLabel.Size = new System.Drawing.Size(58, 13);
+            this.ipAddLabel.TabIndex = 1;
+            this.ipAddLabel.Text = "IP Address";
             // 
             // label1
             // 
@@ -291,19 +315,20 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.statusStrip2);
             this.tabPage2.Controls.Add(this.resetButton);
             this.tabPage2.Controls.Add(this.loadButton);
             this.tabPage2.Controls.Add(this.tableNameComboBox);
             this.tabPage2.Controls.Add(this.tableNameLabel);
-            this.tabPage2.Controls.Add(this.sqlConnectButton);
+            this.tabPage2.Controls.Add(this.viewButton);
             this.tabPage2.Controls.Add(this.passwordTextBox);
             this.tabPage2.Controls.Add(this.userNameTextBox);
             this.tabPage2.Controls.Add(this.databaseNameTextBox);
             this.tabPage2.Controls.Add(this.serverNameTextBox);
-            this.tabPage2.Controls.Add(this.label14);
-            this.tabPage2.Controls.Add(this.label13);
-            this.tabPage2.Controls.Add(this.label12);
-            this.tabPage2.Controls.Add(this.label11);
+            this.tabPage2.Controls.Add(this.passwordLabel);
+            this.tabPage2.Controls.Add(this.userNameLabel);
+            this.tabPage2.Controls.Add(this.databaseNameLabel);
+            this.tabPage2.Controls.Add(this.serverNameLabel);
             this.tabPage2.Controls.Add(this.label10);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -313,6 +338,22 @@
             this.tabPage2.Text = "SQL";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // statusStrip2
+            // 
+            this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel2});
+            this.statusStrip2.Location = new System.Drawing.Point(3, 399);
+            this.statusStrip2.Name = "statusStrip2";
+            this.statusStrip2.Size = new System.Drawing.Size(786, 22);
+            this.statusStrip2.TabIndex = 13;
+            this.statusStrip2.Text = "statusStrip2";
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
             // 
             // resetButton
             // 
@@ -352,15 +393,15 @@
             this.tableNameLabel.TabIndex = 11;
             this.tableNameLabel.Text = "Table Name";
             // 
-            // sqlConnectButton
+            // viewButton
             // 
-            this.sqlConnectButton.Location = new System.Drawing.Point(618, 329);
-            this.sqlConnectButton.Name = "sqlConnectButton";
-            this.sqlConnectButton.Size = new System.Drawing.Size(135, 23);
-            this.sqlConnectButton.TabIndex = 11;
-            this.sqlConnectButton.Text = "View";
-            this.sqlConnectButton.UseVisualStyleBackColor = true;
-            this.sqlConnectButton.Click += new System.EventHandler(this.sqlConnectButton_Click);
+            this.viewButton.Location = new System.Drawing.Point(618, 329);
+            this.viewButton.Name = "viewButton";
+            this.viewButton.Size = new System.Drawing.Size(135, 23);
+            this.viewButton.TabIndex = 11;
+            this.viewButton.Text = "View";
+            this.viewButton.UseVisualStyleBackColor = true;
+            this.viewButton.Click += new System.EventHandler(this.sqlConnectButton_Click);
             // 
             // passwordTextBox
             // 
@@ -396,45 +437,45 @@
             this.serverNameTextBox.TabIndex = 5;
             this.serverNameTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
-            // label14
+            // passwordLabel
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(238, 236);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(53, 13);
-            this.label14.TabIndex = 4;
-            this.label14.Text = "Password";
-            this.label14.Click += new System.EventHandler(this.label14_Click);
+            this.passwordLabel.AutoSize = true;
+            this.passwordLabel.Location = new System.Drawing.Point(238, 236);
+            this.passwordLabel.Name = "passwordLabel";
+            this.passwordLabel.Size = new System.Drawing.Size(53, 13);
+            this.passwordLabel.TabIndex = 4;
+            this.passwordLabel.Text = "Password";
+            this.passwordLabel.Click += new System.EventHandler(this.label14_Click);
             // 
-            // label13
+            // userNameLabel
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(236, 206);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(55, 13);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Username";
-            this.label13.Click += new System.EventHandler(this.label13_Click);
+            this.userNameLabel.AutoSize = true;
+            this.userNameLabel.Location = new System.Drawing.Point(236, 206);
+            this.userNameLabel.Name = "userNameLabel";
+            this.userNameLabel.Size = new System.Drawing.Size(55, 13);
+            this.userNameLabel.TabIndex = 3;
+            this.userNameLabel.Text = "Username";
+            this.userNameLabel.Click += new System.EventHandler(this.label13_Click);
             // 
-            // label12
+            // databaseNameLabel
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(207, 177);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(84, 13);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "Database Name";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
+            this.databaseNameLabel.AutoSize = true;
+            this.databaseNameLabel.Location = new System.Drawing.Point(207, 177);
+            this.databaseNameLabel.Name = "databaseNameLabel";
+            this.databaseNameLabel.Size = new System.Drawing.Size(84, 13);
+            this.databaseNameLabel.TabIndex = 2;
+            this.databaseNameLabel.Text = "Database Name";
+            this.databaseNameLabel.Click += new System.EventHandler(this.label12_Click);
             // 
-            // label11
+            // serverNameLabel
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(222, 146);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(69, 13);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "Server Name";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
+            this.serverNameLabel.AutoSize = true;
+            this.serverNameLabel.Location = new System.Drawing.Point(222, 146);
+            this.serverNameLabel.Name = "serverNameLabel";
+            this.serverNameLabel.Size = new System.Drawing.Size(69, 13);
+            this.serverNameLabel.TabIndex = 1;
+            this.serverNameLabel.Text = "Server Name";
+            this.serverNameLabel.Click += new System.EventHandler(this.label11_Click);
             // 
             // label10
             // 
@@ -459,8 +500,12 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.statusStrip2.ResumeLayout(false);
+            this.statusStrip2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -469,16 +514,16 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label ipAddLabel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.CheckBox WriteCheckBox;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label tagNameLabel;
+        private System.Windows.Forms.Label slotLabel;
+        private System.Windows.Forms.Label pathLabel;
+        private System.Windows.Forms.Label elemCountLabel;
+        private System.Windows.Forms.Label valToWriteLabel;
+        private System.Windows.Forms.CheckBox writeCheckBox;
+        private System.Windows.Forms.Label dataTypeLabel;
+        private System.Windows.Forms.Label cpuTypeLabel;
         private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.ComboBox DataTypeComboBox;
         private System.Windows.Forms.ComboBox CpuTypeComboBox;
@@ -492,16 +537,20 @@
         private System.Windows.Forms.TextBox userNameTextBox;
         private System.Windows.Forms.TextBox databaseNameTextBox;
         private System.Windows.Forms.TextBox serverNameTextBox;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label passwordLabel;
+        private System.Windows.Forms.Label userNameLabel;
+        private System.Windows.Forms.Label databaseNameLabel;
+        private System.Windows.Forms.Label serverNameLabel;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button sqlConnectButton;
+        private System.Windows.Forms.Button viewButton;
         private System.Windows.Forms.ComboBox tableNameComboBox;
         private System.Windows.Forms.Label tableNameLabel;
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.Button resetButton;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.StatusStrip statusStrip2;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
     }
 }
 

@@ -18,6 +18,7 @@ namespace PDC_Lauren
 
         private BindingSource bindingSourceList = new BindingSource();
         private SqlDataAdapter listAdapter = new SqlDataAdapter();
+        private bool isString = false;
 
         public Form1()
         {
@@ -28,19 +29,81 @@ namespace PDC_Lauren
         {
             // hide fields on form
             WriteValueTextBox.Visible = false;
-            label9.Visible = false;
+            valToWriteLabel.Visible = false;
             tableNameLabel.Visible = false;
             tableNameComboBox.Visible = false;
-            sqlConnectButton.Visible = false;
+            viewButton.Visible = false;
             resetButton.Visible = false;
+            toolStripStatusLabel1.Text = "Fill appropriate fields to read from PLC";
+            toolStripStatusLabel2.Text = "Fill appropriate fields to access SQL Database";
+
+            // set up tool tips
+            // sql
+            ToolTip serverNameToolTip = new ToolTip();
+            serverNameToolTip.SetToolTip(serverNameLabel, "The name of the SQL Server");
+            ToolTip databaseNameToolTip = new ToolTip();
+            databaseNameToolTip.SetToolTip(databaseNameLabel, "The name of the Database");
+            ToolTip userNameToolTip = new ToolTip();
+            userNameToolTip.SetToolTip(userNameLabel, "The username to access the server");
+            ToolTip passwordToolTip = new ToolTip();
+            passwordToolTip.SetToolTip(passwordLabel, "The password to access the server");
+            ToolTip tableNameToolTip = new ToolTip();
+            tableNameToolTip.SetToolTip(tableNameLabel, "The name of the table on the database");
+            ToolTip loadToolTip = new ToolTip();
+            loadToolTip.SetToolTip(loadButton, "Loads the list of tables on the database");
+            ToolTip viewToolTip = new ToolTip();
+            viewToolTip.SetToolTip(viewButton, "Shows SQL data table");
+            ToolTip resetButtonToolTip = new ToolTip();
+            resetButtonToolTip.SetToolTip(resetButton, "Click to clear connection and form fields.");
+
+            // rslinx
+            ToolTip ipAddToolTip = new ToolTip();
+            ipAddToolTip.SetToolTip(ipAddLabel, "The IP Address to connect to the CPU");
+            ToolTip pathToolTip = new ToolTip();
+            pathToolTip.SetToolTip(pathLabel, "The path on which the CPU is located");
+            ToolTip slotToolTip = new ToolTip();
+            slotToolTip.SetToolTip(slotLabel, "If the CPU is on a Backplane: the slot it is located on");
+            ToolTip cpuToolTip = new ToolTip();
+            cpuToolTip.SetToolTip(cpuTypeLabel, "The type of CPU to connect to");
+            ToolTip tagNameToolTip = new ToolTip();
+            tagNameToolTip.SetToolTip(tagNameLabel, "The tag name to read/write to");
+            ToolTip dataTypeToolTip = new ToolTip();
+            dataTypeToolTip.SetToolTip(dataTypeLabel, "The data type of the selected tag value");
+            ToolTip elemCountToolTip = new ToolTip();
+            elemCountToolTip.SetToolTip(elemCountLabel, "The amount of elements to read/write to for the selected tag");
+            ToolTip writeCheckToolTip = new ToolTip();
+            writeCheckToolTip.SetToolTip(writeCheckBox, "Select if you would like to write to the CPU");
+            ToolTip valToWriteToolTip = new ToolTip();
+            valToWriteToolTip.SetToolTip(valToWriteLabel, "The value to write to the CPU");
+            ToolTip connectButtonToolTip = new ToolTip();
+            connectButtonToolTip.SetToolTip(connectButton, "Click to connect and run read/write on CPU");
         }
 
         private void connectButton_Click(object sender, EventArgs e)
         {
+
+            string datatype = "";
+
+            if (DataTypeComboBox.Text == "String")
+            {
+                datatype = "Int8";
+                isString = true;
+            }
+            else
+            {
+                datatype = DataTypeComboBox.Text;
+                isString = false;
+            }
+
             // access and format form data
+            //PLCommunication plcom = new PLCommunication(IPAddTextBox.Text.Trim(), (PathComboBox.SelectedIndex + 1).ToString().Trim(),
+            //        SlotTextBox.Text.Trim(), CpuTypeComboBox.Text.Trim(), TagNameTextBox.Text.Trim(), DataTypeComboBox.Text,
+            //        Int32.Parse(ElementCountTextBox.Text), writeCheckBox.Checked, WriteValueTextBox.Text);
+
             PLCommunication plcom = new PLCommunication(IPAddTextBox.Text.Trim(), (PathComboBox.SelectedIndex + 1).ToString().Trim(),
-                    SlotTextBox.Text.Trim(), CpuTypeComboBox.Text.Trim(), TagNameTextBox.Text.Trim(), DataTypeComboBox.Text,
-                    Int32.Parse(ElementCountTextBox.Text), WriteCheckBox.Checked, WriteValueTextBox.Text);
+                   SlotTextBox.Text.Trim(), CpuTypeComboBox.Text.Trim(), TagNameTextBox.Text.Trim(), datatype,
+                   Int32.Parse(ElementCountTextBox.Text), writeCheckBox.Checked, WriteValueTextBox.Text);
+
 
             // create instance of plc client
             var client = new Libplctag();
@@ -72,6 +135,9 @@ namespace PDC_Lauren
 
             // get the data from the form
             var rc = client.ReadTag(tag, 5000);
+
+            Console.WriteLine($"libplctagstatus = {client.GetStatus(tag)}");
+
             if (rc != Libplctag.PLCTAG_STATUS_OK)
             {
                 MessageBox.Show($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -79,12 +145,17 @@ namespace PDC_Lauren
             }
 
             // determine if reading or writing to plc
-            if (!WriteCheckBox.Checked)
+            if (!writeCheckBox.Checked)
             {
-                // print data according to data type
+                statusStrip1.Text = "Reading from PLC";
+
+                String tagValues = "";
+                byte[] byteArray = new byte[tag.ElementCount];
+
                 for (int i = 0; i < tag.ElementCount; i++)
                 {
-                    switch (plcom.dtString)
+                    //switch (plcom.dtString)
+                    switch (DataTypeComboBox.Text)
                     {
                         case "Int16":
                             MessageBox.Show($"{plcom.tagname}={client.GetInt16Value(tag, (i * tag.ElementSize))}\n", "Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -98,21 +169,27 @@ namespace PDC_Lauren
                         case "Float32":
                             MessageBox.Show($"{plcom.tagname}={client.GetFloat32Value(tag, (i * tag.ElementSize))}\n", "Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
-                        // haven't tested the string data type
-                        //case "String":
-                        // not tested bc unable to find a string data type value on plc
-                        //MessageBox.Show($"{plcom.tagname}={client.ReadTag(tag, (i * tag.ElementSize))}\n", "Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        //break;
+                        // have not tested the string data type
+                        case "String":
+                            tagValues += $"{plcom.tagname}[{i}] = {client.GetInt8Value(tag, (i * tag.ElementSize))}\n";
+                            byteArray[i] = (byte)client.GetInt8Value(tag, (i * tag.ElementSize));
+                            break;
                         default:
                             MessageBox.Show("ERROR: No data type identified.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             break;
                     }
                 }
+                if (isString)
+                {
+                    string s = Encoding.ASCII.GetString(byteArray);
+                    MessageBox.Show($"{plcom.tagname} = {s}");
+                    //MessageBox.Show(tagValues);
+                }
             }
-            else if (WriteCheckBox.Checked)
+            else if (writeCheckBox.Checked)
             {
+                statusStrip1.Text = "Writing to PLC";
                 // writing to plc
-                //if (plcom.valToWrite.ToString() != "")
                 try
                 {
                     for (int i = 0; i < plcom.elemCount; i++)
@@ -179,7 +256,7 @@ namespace PDC_Lauren
             }
             else
             {
-                // not sure if should read or write to plc
+                // operation not specified
                 MessageBox.Show("'Write to PLC' checkbox value is unknown. Unable to perform any operation.'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -191,16 +268,34 @@ namespace PDC_Lauren
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             WriteValueTextBox.Visible = !WriteValueTextBox.Visible;
-            label9.Visible = !label9.Visible;
+            valToWriteLabel.Visible = !valToWriteLabel.Visible;
+            if (WriteValueTextBox.Visible)
+            {
+                toolStripStatusLabel1.Text = "Fill appropriate fields to write to PLC";
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = "Fill appropriate fields to read from PLC";
+            }
         }
 
+        // when connection button is clicked
         private void sqlConnectButton_Click(object sender, EventArgs e)
         {
-            SQLCommunication.tableName = tableNameComboBox.Text;
-            Form2 form2 = new Form2();
-            form2.Visible = true;
+            // store the table name and open the new form
+            try
+            {
+                SQLCommunication.tableName = tableNameComboBox.Text;
+                Form2 form2 = new Form2();
+                form2.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"ERROR: {ex}", "Error",  MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }            
         }
 
+        // when load button is clicked
         private void loadButton_Click(object sender, EventArgs e)
         {
             // connect to the sql client
@@ -225,7 +320,7 @@ namespace PDC_Lauren
                     // hide and show respective fields on form
                     tableNameLabel.Visible = true;
                     tableNameComboBox.Visible = true;
-                    sqlConnectButton.Visible = true;
+                    viewButton.Visible = true;
                     loadButton.Visible = false;
                     resetButton.Visible = true;
 
@@ -238,15 +333,22 @@ namespace PDC_Lauren
             }
         }
 
+        // when the reset button is clicked
         private void resetButton_Click(object sender, EventArgs e)
         {
             WriteValueTextBox.Visible = false;
-            label9.Visible = false;
+            valToWriteLabel.Visible = false;
             loadButton.Visible = true;
             tableNameLabel.Visible = false;
             tableNameComboBox.Visible = false;
-            sqlConnectButton.Visible = false;
+            viewButton.Visible = false;
             resetButton.Visible = false;
+            
+            // clear the form fields
+            serverNameTextBox.Text = "";
+            databaseNameTextBox.Text = "";
+            userNameTextBox.Text = "";
+            passwordTextBox.Text = "";
         }
 
         // unused

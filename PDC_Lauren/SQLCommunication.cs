@@ -24,7 +24,6 @@ namespace PDC_Lauren
             SQLCommunication.databaseName = databaseName;
             SQLCommunication.userName = userName;
             SQLCommunication.password = password;
-            //SQLCommunication.tableName = tableName;
             SQLCommunication.cs = "Data Source=" + SQLCommunication.serverName + ";" +
                 "Initial Catalog=" + SQLCommunication.databaseName + ";" +
                 "User ID=" + SQLCommunication.userName + ";" +
