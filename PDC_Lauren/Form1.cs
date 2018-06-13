@@ -19,6 +19,7 @@ namespace PDC_Lauren
         private BindingSource bindingSourceList = new BindingSource();
         private SqlDataAdapter listAdapter = new SqlDataAdapter();
         private bool isString = false;
+        private byte[] byteArr;
 
         public Form1()
         {
@@ -83,7 +84,6 @@ namespace PDC_Lauren
         {
 
             string datatype = "";
-
             if (DataTypeComboBox.Text == "String")
             {
                 datatype = "Int8";
@@ -94,11 +94,6 @@ namespace PDC_Lauren
                 datatype = DataTypeComboBox.Text;
                 isString = false;
             }
-
-            // access and format form data
-            //PLCommunication plcom = new PLCommunication(IPAddTextBox.Text.Trim(), (PathComboBox.SelectedIndex + 1).ToString().Trim(),
-            //        SlotTextBox.Text.Trim(), CpuTypeComboBox.Text.Trim(), TagNameTextBox.Text.Trim(), DataTypeComboBox.Text,
-            //        Int32.Parse(ElementCountTextBox.Text), writeCheckBox.Checked, WriteValueTextBox.Text);
 
             PLCommunication plcom = new PLCommunication(IPAddTextBox.Text.Trim(), (PathComboBox.SelectedIndex + 1).ToString().Trim(),
                    SlotTextBox.Text.Trim(), CpuTypeComboBox.Text.Trim(), TagNameTextBox.Text.Trim(), datatype,
@@ -135,9 +130,6 @@ namespace PDC_Lauren
 
             // get the data from the form
             var rc = client.ReadTag(tag, 5000);
-
-            Console.WriteLine($"libplctagstatus = {client.GetStatus(tag)}");
-
             if (rc != Libplctag.PLCTAG_STATUS_OK)
             {
                 MessageBox.Show($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -148,10 +140,8 @@ namespace PDC_Lauren
             if (!writeCheckBox.Checked)
             {
                 statusStrip1.Text = "Reading from PLC";
-
                 String tagValues = "";
                 byte[] byteArray = new byte[tag.ElementCount];
-
                 for (int i = 0; i < tag.ElementCount; i++)
                 {
                     //switch (plcom.dtString)
@@ -192,9 +182,20 @@ namespace PDC_Lauren
                 // writing to plc
                 try
                 {
+                    if (isString)
+                    {
+                        string toByte = plcom.valToWrite.Trim();
+                        byteArr = Encoding.ASCII.GetBytes(toByte);
+                        string bytes = "";
+                        for (int j = 0; j < toByte.Length; j++)
+                        {
+                            bytes += $"byte[{j}] = {byteArr[j]} \n";
+                        }
+                        MessageBox.Show($"{bytes}");
+                    }
                     for (int i = 0; i < plcom.elemCount; i++)
                     {
-                        switch (plcom.dtString)
+                        switch (DataTypeComboBox.Text)
                         {
                             case "Int16":
                                 Int16 val0 = Convert.ToInt16(plcom.valToWrite);
@@ -212,19 +213,26 @@ namespace PDC_Lauren
                                 float val3 = float.Parse(plcom.valToWrite);
                                 client.SetFloat32Value(tag, (i * tag.ElementSize), val3);
                                 break;
+                            case "String":
+                                client.SetInt8Value(tag, (i * tag.ElementSize), (sbyte)byteArr[i]);
+                                break;
                             default:
                                 break;
                         }
                     }
-
                     rc = client.WriteTag(tag, 5000);
-
                     if (rc != Libplctag.PLCTAG_STATUS_OK)
                     {
-                        MessageBox.Show($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(rc)}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (rc == -33)
+                        {
+                            MessageBox.Show($"Unable to write to this tag: READ ONLY");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(rc)}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                         return;
                     }
-
                     // print the new value that was written to the tag
                     for (int i = 0; i < tag.ElementCount; i++)
                     {
@@ -252,7 +260,6 @@ namespace PDC_Lauren
                 {
                     MessageBox.Show("ERROR: Value to Write is not valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-  
             }
             else
             {
