@@ -57,7 +57,7 @@ namespace PDC_Lauren
             ToolTip resetButtonToolTip = new ToolTip();
             resetButtonToolTip.SetToolTip(resetButton, "Click to clear connection and form fields.");
 
-            // rslinx
+            // plc
             ToolTip ipAddToolTip = new ToolTip();
             ipAddToolTip.SetToolTip(ipAddLabel, "The IP Address to connect to the CPU");
             ToolTip pathToolTip = new ToolTip();
@@ -99,7 +99,6 @@ namespace PDC_Lauren
                    SlotTextBox.Text.Trim(), CpuTypeComboBox.Text.Trim(), TagNameTextBox.Text.Trim(), datatype,
                    Int32.Parse(ElementCountTextBox.Text), writeCheckBox.Checked, WriteValueTextBox.Text);
 
-
             // create instance of plc client
             var client = new Libplctag();
 
@@ -117,11 +116,6 @@ namespace PDC_Lauren
             // add the tag
             client.AddTag(tag);
 
-            // check that connection is successful
-            while (client.GetStatus(tag) == Libplctag.PLCTAG_STATUS_PENDING)
-            {
-                Thread.Sleep(100);
-            }
             if (client.GetStatus(tag) != Libplctag.PLCTAG_STATUS_OK)
             {
                 MessageBox.Show($"ERROR: Unable to set up tag internal state.\n {client.DecodeError(client.GetStatus(tag))}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -132,7 +126,14 @@ namespace PDC_Lauren
             var rc = client.ReadTag(tag, 5000);
             if (rc != Libplctag.PLCTAG_STATUS_OK)
             {
-                MessageBox.Show($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (rc == -19)
+                {
+                    MessageBox.Show($"ERROR: Unable to read the data due to an incorrect data type", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show($"ERROR: Unable to read the data! Got error code {rc}: {client.DecodeError(client.GetStatus(tag))}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 return;
             }
 
@@ -173,7 +174,6 @@ namespace PDC_Lauren
                 {
                     string s = Encoding.ASCII.GetString(byteArray);
                     MessageBox.Show($"{plcom.tagname} = {s}");
-                    //MessageBox.Show(tagValues);
                 }
             }
             else if (writeCheckBox.Checked)
@@ -225,7 +225,7 @@ namespace PDC_Lauren
                     {
                         if (rc == -33)
                         {
-                            MessageBox.Show($"Unable to write to this tag: READ ONLY");
+                            MessageBox.Show($"Unable to write to this tag: READ ONLY", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         else
                         {
@@ -253,7 +253,6 @@ namespace PDC_Lauren
                             default:
                                 break;
                         }
-
                     }
                 }
                 catch
@@ -388,52 +387,42 @@ namespace PDC_Lauren
         {
 
         }
-
         private void DataTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
         private void WriteValueTextBox_TextChanged(object sender, EventArgs e)
         {
 
         }
-
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
 
         }
-
         private void label12_Click(object sender, EventArgs e)
         {
 
         }
-
         private void label13_Click(object sender, EventArgs e)
         {
 
         }
-
         private void label14_Click(object sender, EventArgs e)
         {
 
         }
-
         private void label11_Click(object sender, EventArgs e)
         {
 
         }
-
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
-
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
         }
-
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
 

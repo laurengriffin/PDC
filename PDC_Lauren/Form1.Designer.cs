@@ -108,12 +108,13 @@
             this.tabPage1.Controls.Add(this.tagNameLabel);
             this.tabPage1.Controls.Add(this.ipAddLabel);
             this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(792, 424);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "RSLinx";
+            this.tabPage1.Text = "PLC";
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
@@ -308,9 +309,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(361, 32);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 24);
+            this.label1.Size = new System.Drawing.Size(45, 24);
             this.label1.TabIndex = 0;
-            this.label1.Text = "RSLinx";
+            this.label1.Text = "PLC";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // tabPage2
