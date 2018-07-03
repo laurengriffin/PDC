@@ -74,8 +74,11 @@ namespace PDC_Lauren
             {
                 this.dtInt = DataType.String;
             }
-            this.elemCount = elemCount;
+
             this.writeToPlc = writeToPlc;
+
+            this.elemCount = elemCount;
+
             this.valToWrite = valToWrite;
         }
 
@@ -119,8 +122,11 @@ namespace PDC_Lauren
             {
                 this.dtInt = DataType.String;
             }
-            this.elemCount = elemCount;
+
             this.writeToPlc = writeToPlc;
+
+            this.elemCount = elemCount;
+
             this.valToWrite = valToWrite;
         }
 
