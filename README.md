@@ -6,7 +6,7 @@ This is a Windows Forms application that provides a simple interface that allows
 This project uses the libplctag library, which can be found [here](https://github.com/kyle-github/libplctag) and the c# wrapper for this library can be found [here](https://github.com/mesta1/libplctag-csharp).
 
 ## Development + Installation
-### Using Visual Basic
+### Using Visual Studio
 *If you do not have visual studio downloaded onto your computer, you can download it [here](https://www.visualstudio.com/downloads/).*
 
 1. Download the repository
