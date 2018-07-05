@@ -35,17 +35,24 @@ ___
 ![](https://lh3.googleusercontent.com/ZSmGV1kPpbXzaP9Gk042jyOEX8w4uBjIaNW2csbvweOVTxRkNRMIYy5GgtHGOgRJgxLbqPhn7tRH)
 
 **IP Address:** The IP Address of the PLC.
+
 **Path:** The path to access the PLC from the gateway. The path is required for an LGX cpu but optional for other types.
+
 **Slot:** The slot is a continuation of the path. For example if the PLC is located on the Backplane on slot 0, you would choose 'Backplane' for Path and '0' for Slot.
+
 **Cpu Type:** Type of PLC. This library supports: compactlogix, clgx, lgx, controllogix, flexlogix, and flgx.
+
 **Tag Name:** The name of the tag to access. 
 - If the tag is located inside of another tag: `OutsideTag.InnerTag`
 - If the tag is an array: `myTag[3]` 
 
 **Data Type:** The type of data the tag is storing. This library supports: Int8, Int16, Int32, Float32, and String.
+
 **Element Count:** The number of elements in array. Default value is 1.
 ![](https://lh3.googleusercontent.com/oqgUHTHUudL6SgmBaLaAYUZ_Pb2Uh0_pXyc_xAqY3fRaYFatVtdYetWiMQe2MWlVAGTJRehj4vVN)
+
 **Write to PLC:** Select this checkbox to write to the PLC instead of reading from the PLC.
+
 **Value to Write:** When 'Write to PLC' is selected, a textbox to enter the value to write to the PLC appears. This value should match the format of the Data Type that was selected.
 
 Once the fields are filled in, click the 'Connect' button to get the results.
@@ -56,8 +63,11 @@ ___
 ![](https://lh3.googleusercontent.com/MXe1WxCp8yrBtCFNYkN1RIUlYCeCEKZrNNEa0NKCTcNsgYP-ilPdeJL5cOB6D75vJmca7xAnyHl6)
 
 **Server Name:** The server that the SQL Database is located on.
+
 **Database Name:** The name of the database to access.
+
 **Username:** The username of the login credentials to access the database.
+
 **Password:** The password of the login credentials to access the database.
 
 Once the fields are filled in, click the 'Load' button to reveal a drop-down list of tables within the database. 
