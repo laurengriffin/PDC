@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PDC_Lauren.Properties {
+namespace PDC.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

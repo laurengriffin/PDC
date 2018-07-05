@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PDC_Lauren
+namespace PDC
 {
     public partial class Form1 : Form
     {

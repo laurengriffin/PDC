@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LibplctagWrapper;
 
-namespace PDC_Lauren
+namespace PDC
 {
     class PLCommunication
     {

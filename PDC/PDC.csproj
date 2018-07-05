@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D7D4AF00-9EEA-4F09-B2F3-27AC218DDD79}</ProjectGuid>
+    <ProjectGuid>{B7F0E2A9-1246-4245-9077-80CC95F48B9B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>PDC_Lauren</RootNamespace>
     <AssemblyName>PDC_Lauren</AssemblyName>

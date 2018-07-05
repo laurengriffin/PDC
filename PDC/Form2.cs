@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 
-namespace PDC_Lauren
+namespace PDC
 {
     public partial class Form2 : Form
     {
