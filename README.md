@@ -10,7 +10,7 @@ This project uses the libplctag library, which can be found [here](https://githu
 *If you do not have visual studio downloaded onto your computer, you can download it [here](https://www.visualstudio.com/downloads/).*
 
 1. Download the repository
-2. Open `PDC_Lauren.sln` as a solution in Visual Studio
+2. Open `PDC.sln` as a solution in Visual Studio
 3. Add the corresponding reference(s)
 
 *This is all you need to do to start developing. In order to build the program and run it on other computers, you can follow the steps listed below.*
