@@ -43,7 +43,7 @@ ___
 - If the tag is an array: `myTag[3]` 
 
 **Data Type:** The type of data the tag is storing. This library supports: Int8, Int16, Int32, Float32, and String.
-**Element Count:** *(optional)* The number of elements in array.
+**Element Count:** The number of elements in array. Default value is 1.
 ![](https://lh3.googleusercontent.com/oqgUHTHUudL6SgmBaLaAYUZ_Pb2Uh0_pXyc_xAqY3fRaYFatVtdYetWiMQe2MWlVAGTJRehj4vVN)
 **Write to PLC:** Select this checkbox to write to the PLC instead of reading from the PLC.
 **Value to Write:** When 'Write to PLC' is selected, a textbox to enter the value to write to the PLC appears. This value should match the format of the Data Type that was selected.
